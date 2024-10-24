@@ -1,2 +1,10 @@
-pip install pandas matplotlib seaborn snowflake-connector-python numpy tensorflow torch scipy scikit-learn
+pandas
+matplotlib
+seaborn
+snowflake-connector-python
+numpy
+tensorflow
+torch
+scipy
+scikit-learn
 
