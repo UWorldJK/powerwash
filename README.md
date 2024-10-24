@@ -1,5 +1,7 @@
 # Team 5: PowerWash: Automatic Exploratory Data Analysis (EDA)
 
+**Contributors:** Tate Middleton, David Valarde, Jacob Kurry, ...
+
 **Overview:**  
 PowerWash is a streamlined tool designed to simplify the process of cleaning and analyzing datasets. By allowing users to upload a CSV through our intuitive front-end interface, PowerWash takes care of the heavy lifting in the background. Leveraging Python’s powerful Pandas library, the data is cleaned and prepped for further analysis.
 
