@@ -1,0 +1,2 @@
+This has been our first meeting and we finalized our project ideas and created 
+a git repo for our work. We will each work on our own branch
