@@ -22,5 +22,13 @@ services:
     volumes:
       - ./:/repository
     command: 'npm start'
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/opt/app
+    working_dir: /opt/app
+    command: python main.py
 volumes:
   group-project:
