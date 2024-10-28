@@ -1,23 +1,14 @@
 from flask import Flask, request, jsonify
 import io
 import pandas as pd
-
+import cleaner as clean
 app = Flask(__name__)
 
 
 @app.route("/upload", methods=["POST"])
 def getFile():
-    print("In Method")
-    # files = list(request.files["file"])
-    # headers = dict(request.headers)
-    # args = dict(request.args)
-    # form_data = dict(request.form)
-    # print(f"This is the header {headers}")
-    # print(f"This is the args {args}")
-    # print(f"This is the form_data {form_data}")
-
     file = request.files["file"]
-
+    #checks
     if file.filename == "":
         return jsonify({"error": "No selected file"}), 400
     if file and file.filename.endswith(".csv"):
@@ -41,4 +32,4 @@ def getFile():
                 'message': "done"
             }), 400
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
