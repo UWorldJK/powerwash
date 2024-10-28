@@ -1,17 +1,19 @@
-# Use an official Python image from the Docker Hub
-FROM python:3.9-slim
+FROM python:3.9-bullseye
 
-# Set the working directory inside the container
-WORKDIR /src
+WORKDIR /opt/app
 
-# Copy the requirements.txt file into the working directory
 COPY requirements.txt .
 
-# Install the dependencies, can use without --no-cache-dir, but will make image size bigger, not sure what is best?
-RUN pip install --no-cache-dir -r requirements.txt 
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
 
-# Copy the rest of the application code
 COPY . .
 
-# Set a default command to run your application (if applicable)
-CMD ["python", "/src/python/cleaner.py"]
+# Expose the Flask port (default is 5000)
+EXPOSE 5000
+    
+# Define environment variables, if needed
+ENV FLASK_ENV=development
+    
+# Command to run the Flask app
+CMD ["python", "main.py"]

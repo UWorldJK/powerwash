@@ -22,12 +22,17 @@ services:
     volumes:
       - ./:/repository
     command: 'npm start'
-  python-app:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - .:/app
-    command: python python/cleaner.py  # Replace with your script
+      - ./:/opt/app
+    working_dir: /opt/app
+    ports:
+      - '5001:5000'  # for flask app
+    environment:
+      - FLASK_ENV=development
+    command: python main.py
 volumes:
   group-project:
