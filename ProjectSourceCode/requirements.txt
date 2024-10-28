@@ -1,8 +1,16 @@
 flask==2.3.2
 pandas==2.2.1
-numpy
-matplotlib
-seaborn
-black
+numpy==2.1.2
+matplotlib==3.9.0
+seaborn==0.13.2
+black==24.10.0
+scipy==1.14.1         # For scientific computations
+scikit-learn==1.5.1    # For machine learning tasks
+requests==2.32.3       # For handling HTTP requests
+Jinja2==3.1.4         # Template engine, used with Flask
+gunicorn==23.0.0       # WSGI HTTP server for Flask deployment
+sqlalchemy==2.0.36    # ORM for database interaction
+psycopg2-binary==2.9.10 # PostgreSQL database adapter for Python
+missingno==0.5.2       # For visualizing missing data
+joblib==1.4.2          # For efficient memory usage and parallel processing
 io
-
