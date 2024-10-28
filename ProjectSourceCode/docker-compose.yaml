@@ -30,7 +30,7 @@ services:
       - ./:/opt/app
     working_dir: /opt/app
     ports:
-      - '5000:5000'  # for flask app
+      - '5001:5000'  # for flask app
     environment:
       - FLASK_ENV=development
     command: python main.py

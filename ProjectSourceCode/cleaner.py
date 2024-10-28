@@ -7,19 +7,27 @@ class Cleaner:
     def __init__(self, data):
         self.df = pd.read_csv(data)
     #to remove NA rows and cols
-    def remove_na_duplicates():
+    def remove_na_duplicates(self):
         #ToDo
-    def get_data_types():
+        pass
+    def get_data_types(self):
         #ToDo
-    def convert_time():
+        pass
+    def convert_time(self):
         #ToDo
-    def normalize_data():
+        pass
+    def normalize_data(self):
         #ToDo
-    def get_structure():
+        pass
+    def get_structure(self):
         #ToDo
-    def get_sample():
+        pass
+    def get_sample(self):
         #ToDo
-    def get_granularity():
+        pass
+    def get_granularity(self):
         #ToDo
+        pass
     def clean():
         #ToDo
+        pass

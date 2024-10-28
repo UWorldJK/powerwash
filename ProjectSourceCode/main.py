@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import io
 import pandas as pd
-import Cleaner as clean
+import cleaner as clean
 app = Flask(__name__)
 
 
@@ -31,8 +31,5 @@ def getFile():
             return jsonify({
                 'message': "done"
             }), 400
-def do_something():
-    #now that we have the file we can do something
-    #with it
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
