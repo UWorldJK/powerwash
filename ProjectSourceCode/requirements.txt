@@ -1,1 +1,8 @@
+flask==2.3.2
 pandas==2.2.1
+numpy
+matplotlib
+seaborn
+black
+io
+
