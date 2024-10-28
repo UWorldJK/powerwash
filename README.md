@@ -16,6 +16,6 @@ These visualizations are created using Python’s Seaborn and Matplotlib librari
 The tool also allows users to export and present their findings in the form of slideshows, making it easy to share and communicate insights with others.
 
 **Tech Stack**
-Node, HTML, JS, Python, GPT API, CSS, Express, Bootstrap, PostgressSQL
+Node, HTML, JS, Python, GPT API, CSS, Express, Bootstrap, PostgressSQL, Flask
 
 
