@@ -1,0 +1,19 @@
+{
+  "name": "projectsourcecode",
+  "version": "1.0.0",
+  "description": "a csci3308 project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/UWorldJK/powerwash.git"
+  },
+  "author": "jacob kurry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UWorldJK/powerwash/issues"
+  },
+  "homepage": "https://github.com/UWorldJK/powerwash#readme"
+}
