@@ -11,7 +11,7 @@ services:
   web:
     image: node:lts
     user: 'node'
-    working_dir: /repository
+    working_dir: /src
     env_file: .env
     environment:
       - NODE_ENV=development
