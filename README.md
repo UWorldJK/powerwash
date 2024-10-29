@@ -50,37 +50,6 @@ Flask will manage data-related tasks, including data cleaning and processing, as
 Node.js will handle user authentication, page routing, and other front-end interactions, providing a responsive interface.
 This dual-setup allows us to leverage the strengths of both frameworks, creating a robust, efficient, and scalable application.
 
-**TREE**
-|--init_data
-    |--create.sql
-|--node_modules
-    |--express/
-    |--express-handlebars/
-    |--handlebars/
-    |--pg-promise/
-    |--<...other packages>
-|--views
-    |--layouts
-        |--main.hbs
-    |--pages
-        |--discover.hbs
-        |--login.hbs
-        |--logout.hbs
-        |--register.hbs
-    |--partials
-        |--footer.hbs
-        |--head.hbs
-        |--message.hbs
-        |--nav.hbs
-        |--title.hbs
-|--.env
-|--.gitignore
-|--docker-compose.yaml
-|--main.py
-|--package.json
-|--index.js
-
-
 **Tech Stack**
 Node, HTML, JS, Python, GPT API, CSS, Express, Bootstrap, PostgressSQL, Flask
 
