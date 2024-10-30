@@ -53,6 +53,7 @@ class Cleaner:
         #ToDo
         pass
     
-    def clean():
-        #ToDo
-        pass
+    def clean(self, data):
+        data2 = self.remove_duplicates(data)
+        return data2
+        
