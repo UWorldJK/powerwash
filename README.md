@@ -24,13 +24,19 @@ Our front-end design will leverage Handlebars templating to create clean, organi
 
 **Pages:**
 
-Home Page: Provides a user interface for CSV file input.
-
 Login Page: Allows users to securely log in.
 
 Register Page: Facilitates new user registration.
 
 Logout Page: Enables users to log out of their account.
+
+Home Page: Provides a user interface for CSV file input.
+
+![IMG_0068](https://github.com/user-attachments/assets/c801b93d-2f77-49bf-89fc-d5c9f91139e2)
+
+Choice Page: Lets the user choose what they want to do with their clean data (granularity, graph, present, export, etc.)
+
+![IMG_0069](https://github.com/user-attachments/assets/d7f44459-fbad-497b-ac90-38824285d82d)
 
 Presentation Page: Displays processed data visually.
 
