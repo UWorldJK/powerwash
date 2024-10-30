@@ -56,6 +56,10 @@ Flask will manage data-related tasks, including data cleaning and processing, as
 Node.js will handle user authentication, page routing, and other front-end interactions, providing a responsive interface.
 This dual-setup allows us to leverage the strengths of both frameworks, creating a robust, efficient, and scalable application.
 
+**Front End Design**
+
+Our front-end architecture will use a combination of HTML, Handlebars, and Node.js to provide user-interface, a way to display variable data in a templated format, and connect our front-end to our back-end.
+
 **Tech Stack**
 Node, HTML, JS, Python, GPT API, CSS, Express, Bootstrap, PostgressSQL, Flask
 
