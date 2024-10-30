@@ -1,6 +1,6 @@
 # Team 5: PowerWash: Automatic Exploratory Data Analysis (EDA)
 
-**Contributors:** Tate Middleton, David Valarde, Jacob Kurry, Riley Sackett, Abiral Tuladhur
+**Contributors:** Tate Middleton, David Valarde, Jacob Kurry, Riley Sackett, Abiral Tuladhar
 
 **Overview:**  
 PowerWash is a streamlined tool designed to simplify the process of cleaning and analyzing datasets. By allowing users to upload a CSV through our intuitive front-end interface, PowerWash takes care of the heavy lifting in the background. Leveraging Python’s powerful Pandas library, the data is cleaned and prepped for further analysis.
@@ -58,7 +58,11 @@ This dual-setup allows us to leverage the strengths of both frameworks, creating
 
 **Front End Design**
 
-Our front-end architecture will use a combination of HTML, Handlebars, and Node.js to provide user-interface, a way to display variable data in a templated format, and connect our front-end to our back-end.
+Our front-end architecture will use a combination of HTML, Handlebars, and Google Charts to provide user-interface, a way to display variable data in a templated format, and connect our front-end to our back-end.
+
+HTML will be used to layout the contents of the webpage
+Handlebars will allow the website to displays variable data and user info into an empty template
+Google Charts brings a variety of tools to display data in various charts/plots on the site
 
 **Tech Stack**
 Node, HTML, JS, Python, GPT API, CSS, Express, Bootstrap, PostgressSQL, Flask
