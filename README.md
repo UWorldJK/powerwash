@@ -1,6 +1,6 @@
 # Team 5: PowerWash: Automatic Exploratory Data Analysis (EDA)
 
-**Contributors:** Tate Middleton, David Valarde, Jacob Kurry, Riley Sackett, Abiral Tuladhur
+**Contributors:** Tate Middleton, David Valarde, Jacob Kurry, Riley Sackett, Abiral Tuladhar
 
 **Overview:**  
 PowerWash is a streamlined tool designed to simplify the process of cleaning and analyzing datasets. By allowing users to upload a CSV through our intuitive front-end interface, PowerWash takes care of the heavy lifting in the background. Leveraging Python’s powerful Pandas library, the data is cleaned and prepped for further analysis.
@@ -24,13 +24,19 @@ Our front-end design will leverage Handlebars templating to create clean, organi
 
 **Pages:**
 
-Home Page: Provides a user interface for CSV file input.
-
 Login Page: Allows users to securely log in.
 
 Register Page: Facilitates new user registration.
 
 Logout Page: Enables users to log out of their account.
+
+Home Page: Provides a user interface for CSV file input.
+
+![IMG_0068](https://github.com/user-attachments/assets/c801b93d-2f77-49bf-89fc-d5c9f91139e2)
+
+Choice Page: Lets the user choose what they want to do with their clean data (granularity, graph, present, export, etc.)
+
+![IMG_0069](https://github.com/user-attachments/assets/d7f44459-fbad-497b-ac90-38824285d82d)
 
 Presentation Page: Displays processed data visually.
 
@@ -49,6 +55,14 @@ Our back-end architecture will use a combination of JavaScript (Node.js) and Pyt
 Flask will manage data-related tasks, including data cleaning and processing, as well as any interactions with data-intensive operations.
 Node.js will handle user authentication, page routing, and other front-end interactions, providing a responsive interface.
 This dual-setup allows us to leverage the strengths of both frameworks, creating a robust, efficient, and scalable application.
+
+**Front End Design**
+
+Our front-end architecture will use a combination of HTML, Handlebars, and Google Charts to provide user-interface, a way to display variable data in a templated format, and connect our front-end to our back-end.
+
+HTML will be used to layout the contents of the webpage
+Handlebars will allow the website to displays variable data and user info into an empty template
+Google Charts brings a variety of tools to display data in various charts/plots on the site
 
 **Tech Stack**
 Node, HTML, JS, Python, GPT API, CSS, Express, Bootstrap, PostgressSQL, Flask

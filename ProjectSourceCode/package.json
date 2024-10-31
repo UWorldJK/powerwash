@@ -1,19 +1,18 @@
 {
-  "name": "projectsourcecode",
-  "version": "1.0.0",
-  "description": "a csci3308 project",
+  "name": "powerwash",
   "main": "index.js",
+  "dependencies": {
+      "axios": "^1.1.3",
+      "bcryptjs": "^2.4.0",
+      "body-parser": "1.20.0",
+      "express-handlebars": "^7.1.2",
+      "express": "^4.6.1",
+      "express-session": "1.17.3",
+      "pg-promise": "^10.11.1",
+      "nodemon": "2.0.20"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/UWorldJK/powerwash.git"
-  },
-  "author": "jacob kurry",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/UWorldJK/powerwash/issues"
-  },
-  "homepage": "https://github.com/UWorldJK/powerwash#readme"
+      "prestart": "npm install",
+      "start": "nodemon index.js"
+  }
 }
