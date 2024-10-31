@@ -22,7 +22,8 @@ def getFile():
 
             # Read CSV
             df = pd.read_csv(io.StringIO(file_content))
-            print(df.head())
+            # print(df.head())
+            cleanData = clean(df)
             return jsonify({
                 'message': "done"
             }), 200
