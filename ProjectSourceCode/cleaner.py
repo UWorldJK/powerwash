@@ -7,6 +7,7 @@ from matplotlib import pyplot  as plt
 class Cleaner:
     def __init__(self, data):
         self.df = pd.read_csv(data)
+        print('called')
         
         # #clean must return a Pandas DF
         # self.dfClean = self.clean(self.df)
@@ -23,7 +24,9 @@ class Cleaner:
     #sounds good, because the data set is global we can jus do it like this
 
     def get_head(self):
+        print('called get_head')
         return self.df.head()
+                
 
     def remove_duplicates(self):
         self.df = df.drop_duplicates(inplace = True)

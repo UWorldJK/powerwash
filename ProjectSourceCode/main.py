@@ -16,6 +16,7 @@ def getFile():
     if file and file.filename.endswith(".csv"):
         try:
             # Print file content for debugging
+            print("hello")
             file_content = file.stream.read().decode("utf-8")
             # print("File Content:\n", file_content)  # Display file content
 
@@ -24,24 +25,8 @@ def getFile():
 
             # Read CSV
             #df = pd.read_csv(io.StringIO(file_content))
-            #print(df.head())
-            start_time = time.time()
-            # ... (file reading code)
-            print(f"File read time: {time.time() - start_time:.2f} seconds")
-
-            cleaner_start = time.time()
             data = clean.Cleaner(io.StringIO(file_content))
-            print(f"Cleaner initialization time: {time.time() - cleaner_start:.2f} seconds")
-
-            head_start = time.time()
-            head = data.get_head()
-            print(f"get_head time: {time.time() - head_start:.2f} seconds")
-
-            granularity_start = time.time()
-            granularity = data.get_granularity()
-            print(f"get_granularity time: {time.time() - granularity_start:.2f} seconds")
-
-            print(f"Total processing time: {time.time() - start_time:.2f} seconds")
+            print(data.get_head())
 
             return jsonify({
                 'message': "the file was correctly uploaded"
