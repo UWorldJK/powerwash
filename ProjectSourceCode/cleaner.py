@@ -3,39 +3,40 @@ import numpy as np
 import matplotlib
 from matplotlib import pyplot  as plt
 
-
 class Cleaner:
-    def __init__(self, data):
-        self.df = pd.read_csv(data)
-        
+    def __init__(self, dataframe):        
         #clean must return a Pandas DF
-        self.dfClean = self.clean(self.df)
+        self.df = dataframe
+        self.data = self.clean(self.df)
         
-        rows, cols = self.dfClean.shape
+        rows, cols = self.data.shape
         
         #imagining a screen of feedback after cleaning on front end, between insert and choices pages
         print("Your clean data has",rows,"entries, and", cols, "parameters")
         print("First few entries of your clean data...") #want this to be a dropdown on front end
-        print(self.dfClean.head())
-        return self.dfClean
+        print(self.data.head())
     
     #to remove duplicate entries
-    #@DELETE ME WHEN SEEN made this seperate from NA incase the data SHOULD have duplicates
-    def remove_duplicates(self, data):
-        data.drop_duplicates(inplace = True)
-        return data
+    def remove_duplicates(self, df):
+        df.drop_duplicates(inplace = True)
+        return df
     
-    #to remove NA rows and cols
-    def remove_na(self):
-        pass
+    #to remove NA rows
+    def remove_na(self, df):
+        df.dropna(inplace = True)
+        return df
     
     def get_data_types(self):
         #ToDo
         pass
     
-    def convert_time(self):
-        #ToDo
-        pass
+    def convert_time(self, data):
+        for col in data.columns:
+            lower = col.lower()
+            if "time" in col:
+                data[col] = data[col].dt.strftime('%H:%M:%S %p')
+                
+        return data
     
     def normalize_data(self):
         #ToDo
@@ -53,7 +54,8 @@ class Cleaner:
         #ToDo
         pass
     
-    def clean(self, data):
-        data2 = self.remove_duplicates(data)
-        return data2
+    def clean(self, df):
+        dataDups = self.remove_duplicates(df)
+        dataTime = self.convert_time(dataDups)
+        return dataTime
         
