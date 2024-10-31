@@ -2,18 +2,20 @@ FROM python:3.9-bullseye
 
 WORKDIR /opt/app
 
+# Copy requirements and install dependencies
 COPY requirements.txt .
-
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
+# Copy the rest of the application code
 COPY . .
 
 # Expose the Flask port (default is 5000)
 EXPOSE 5000
-    
-# Define environment variables, if needed
+
+# Set environment variables
 ENV FLASK_ENV=development
-    
-# Command to run the Flask app
-CMD ["python", "main.py"]
+ENV PYTHONUNBUFFERED=1  
+
+# Use Gunicorn to serve the Flask app
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "main:app"]
