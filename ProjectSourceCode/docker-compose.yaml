@@ -11,7 +11,7 @@ services:
   web:
     image: node:lts
     user: 'node'
-    working_dir: /src
+    working_dir: /home/node/app
     env_file: .env
     environment:
       - NODE_ENV=development
@@ -20,7 +20,7 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - ./:/repository
+      - ./:/home/node/app
     command: 'npm start'
   app:
     build:
@@ -30,9 +30,9 @@ services:
       - ./:/opt/app
     working_dir: /opt/app
     ports:
-      - '5001:5000'  # for flask app
+      - '5001:5000'  
     environment:
       - FLASK_ENV=development
-    command: python main.py
+    command: gunicorn -w 4 -b 0.0.0.0:5000 main:app
 volumes:
   group-project:
