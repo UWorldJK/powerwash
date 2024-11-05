@@ -19,38 +19,85 @@
 </head>
 
 <body>
-   <nav class="navbar navbar-expand-lg fixed-top navbar-transparent " color-on-scroll="100">
-       <div class="container">
-         <div class="navbar-translate">
-           <a class="navbar-brand" href="./register.html" data-placement="bottom" target="_blank">
-             <span>POWERWASH</span>
-           </a>
-           <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-             <span class="navbar-toggler-bar bar1"></span>
-             <span class="navbar-toggler-bar bar2"></span>
-             <span class="navbar-toggler-bar bar3"></span>
-           </button>
-         </div>
-         <div class="collapse navbar-collapse justify-content-end" id="navigation">
-           <div class="navbar-collapse-header">
-             <div class="row">
-               <div class="col-6 collapse-brand">
-                 <a>
-                   BLK•
-                 </a>
-               </div>
-               <div class="col-6 collapse-close text-right">
-                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                   <i class="tim-icons icon-simple-remove"></i>
-                 </button>
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>
-     </nav>
+  <!--Begin navbar-->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-transparent " color-on-scroll="100">
+    <div class="container">
+      <div class="navbar-translate">
+        <a class="navbar-brand" href="./home.html" rel="tooltip" title="" data-placement="bottom">
+          <span>POWERWASH•</span>
+        </a>
+        <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse justify-content-end" id="navigation">
+        <div class="navbar-collapse-header">
+          <div class="row">
+            <div class="col-6 collapse-brand">
+              <a>
+                PWSH•
+              </a>
+            </div>
+            <div class="col-6 collapse-close text-right">
+              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="tim-icons icon-simple-remove"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <ul class="navbar-nav">
+          <li class="nav-item p-0">
+            <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom" href="" target="_blank">
+              <i class="fab fa-twitter"></i>
+              <p class="d-lg-none d-xl-none">Twitter</p>
+            </a>
+          </li>
+          <li class="nav-item p-0">
+            <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom" href="" target="_blank">
+              <i class="fab fa-facebook-square"></i>
+              <p class="d-lg-none d-xl-none">Facebook</p>
+            </a>
+          </li>
+          <li class="nav-item p-0">
+            <a class="nav-link" rel="tooltip" title="Follow us on Instagram" data-placement="bottom" href="" target="_blank">
+              <i class="fab fa-instagram"></i>
+              <p class="d-lg-none d-xl-none">Instagram</p>
+            </a>
+          </li>
+          <li class="dropdown nav-item">
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+              <i class="fa fa-cogs d-lg-none d-xl-none"></i> MENU
+            </a>
+            <div class="dropdown-menu dropdown-with-icons">
+              <a href="./login.html" class="dropdown-item">
+                <i class="tim-icons icon-paper"></i> LOGIN
+              </a>
+              <a href="" class="dropdown-item">
+                <i class="tim-icons icon-bullet-list-67"></i>REGISTER
+              </a>
+              <a href="" class="dropdown-item">
+                <i class="tim-icons icon-image-02"></i>EXPORT
+              </a>
+              <a href="" class="dropdown-item">
+                <i class="tim-icons icon-single-02"></i>Profile Page
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!--End navbar-->
+  <!--Begin form for login-->
 
-     <div class="container" style="width:30%; transform: translate(-500px, 200px);">
+     <div class="container" style="
+      width: 500px;
+      position: absolute;
+      left: 50%; top: 50%; 
+      -webkit-transform: translate(-50%, -50%); 
+      transform: translate(-50%, -50%);">
       <form>
         <!-- Email input -->
         <div data-mdb-input-init class="form-outline mb-4">
@@ -64,31 +111,11 @@
           <label class="form-label" for="form2Example2">Password</label>
         </div>
       
-        <!-- 2 column grid layout for inline styling -->
-        <div class="row mb-4">
-          <div class="col d-flex justify-content-center">
-            <!-- Checkbox -->
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-              <label class="form-check-label" for="form2Example31"> Remember me </label>
-            </div>
-          </div>
-      
-          <div class="col">
-            <!-- Simple link -->
-            <a href="#!">Forgot password?</a>
-          </div>
-        </div>
-      
         <!-- Submit button -->
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Sign in</button>
-      
-        <!-- Register buttons -->
-        <div class="text-center">
-          <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-            <i class="fab fa-github"></i>
-          </button>
-        </div>
+        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">SIGN IN</button>
+        <!--Register button-->
+        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4 btn-simple">REGISTER</button>
+
       </form>
     </div>
 </body>
