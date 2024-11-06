@@ -15,8 +15,7 @@ def getFile():
         return jsonify({"error": "No selected file"}), 400
     if file and file.filename.endswith(".csv"):
         try:
-            # Print file content for debugging
-            print("hello")
+    
             file_content = file.stream.read().decode("utf-8")
             # print("File Content:\n", file_content)  # Display file content
 
