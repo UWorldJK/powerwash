@@ -33,6 +33,6 @@ services:
       - '5001:5000'  
     environment:
       - FLASK_ENV=development
-    command: gunicorn -w 4 -b 0.0.0.0:5000 main:app
+    command: gunicorn -w 4 -b 0.0.0.0:5000 --reload main:app
 volumes:
   group-project:
