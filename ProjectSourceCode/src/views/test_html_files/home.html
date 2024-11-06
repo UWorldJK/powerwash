@@ -21,29 +21,30 @@
 <body>
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg fixed-top navbar-transparent " color-on-scroll="100">
-      <div class="container">
-        <div class="navbar-translate">
-          <a class="navbar-brand" href="./home.html" rel="tooltip" title="" data-placement="bottom">
-            <span>POWERWASH•</span>
-          </a>
-          <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar bar1"></span>
-            <span class="navbar-toggler-bar bar2"></span>
-            <span class="navbar-toggler-bar bar3"></span>
-          </button>
-        </div>
-        <div class="collapse navbar-collapse justify-content-end" id="navigation">
-          <div class="navbar-collapse-header">
-            <div class="row">
-              <div class="col-6 collapse-brand">
-                <a>
-                  PWSH•
-                </a>
-              </div>
-              <div class="col-6 collapse-close text-right">
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                  <i class="tim-icons icon-simple-remove"></i>
-                </button>
+        <div class="container">
+          <div class="navbar-translate">
+            <a class="navbar-brand" href="./home.html" rel="tooltip" title="" data-placement="bottom">
+              <span>POWERWASH•</span>
+            </a>
+            <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-bar bar1"></span>
+              <span class="navbar-toggler-bar bar2"></span>
+              <span class="navbar-toggler-bar bar3"></span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <div class="navbar-collapse-header">
+              <div class="row">
+                <div class="col-6 collapse-brand">
+                  <a>
+                    PWSH•
+                  </a>
+                </div>
+                <div class="col-6 collapse-close text-right">
+                  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="tim-icons icon-simple-remove"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -56,23 +57,14 @@
                 <a href="./login.html" class="dropdown-item">
                   <i class="tim-icons icon-paper"></i> Login
                 </a>
-                <a href="./login.html" class="dropdown-item">
+                <a href="./logout.html" class="dropdown-item">
                   <i class="tim-icons icon-paper"></i> Logout
                 </a>
-                <a href="" class="dropdown-item">
+                <a href="./register.html" class="dropdown-item">
                   <i class="tim-icons icon-bullet-list-67"></i>Register
                 </a>
                 <a href="" class="dropdown-item">
-                  <i class="tim-icons icon-single-02"></i>Forgot Password
-                </a>
-                <a href="" class="dropdown-item">
                   <i class="tim-icons icon-image-02"></i>Export
-                </a>
-                <a href="" class="dropdown-item">
-                  <i class="tim-icons icon-single-02"></i>Profile
-                </a>
-                <a href="" class="dropdown-item">
-                  <i class="tim-icons icon-single-02"></i>Home
                 </a>
               </div>
             </li>
@@ -83,9 +75,75 @@
       <!--End Navbar-->
       <!--Main page-->
     <div class="wrapper">
-        
-    </div>
+        <!-- Header Section -->
+    <header class="section text-center text-white" style="background: url('../assets/img/cleaning-bg.jpg') center center / cover;">
+      <div class="container">
+        <h1 class="display-3">Welcome to POWERWASH</h1>
+        <p class="lead">Your go-to solution for precise and efficient dataset cleaning</p>
+        <a href="./setup.html" class="btn btn-primary btn-lg mt-4">Get Started</a>
+      </div>
+    </header>
 
+    <!-- About Us Section -->
+    <section id="about" class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h2>About POWERWASH</h2>
+            <p>POWERWASH specializes in helping you clean and prepare your datasets for analysis. From removing duplicates to filling in missing values, we ensure your data is ready for accurate analysis.</p>
+          </div>
+          <div class="col-md-6">
+            <img src="" class="img-fluid rounded" alt="About POWERWASH">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="bg-light py-5">
+      <div class="container">
+        <h2 class="text-center">Our Services</h2>
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <div class="card text-center shadow">
+              <div class="card-body">
+                <i class="tim-icons icon-trash-simple display-4 text-primary"></i>
+                <h5 class="card-title mt-3">Duplicate Removal</h5>
+                <p class="card-text">Remove duplicate records to keep your data clean and consistent.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card text-center shadow">
+              <div class="card-body">
+                <i class="tim-icons icon-chart-bar-32 display-4 text-success"></i>
+                <h5 class="card-title mt-3">Graphing Data</h5>
+                <p class="card-text">Visualize your data with insightful graphs to better understand trends and patterns.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card text-center shadow">
+              <div class="card-body">
+                <i class="tim-icons icon-sound-wave display-4 text-warning"></i>
+                <h5 class="card-title mt-3">Noise Reduction</h5>
+                <p class="card-text">Filter out irrelevant data points for a clear and reliable dataset.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Footer -->
+    <section id="contact" class="py-5 text-center text-white" style="background-color: #1a1a1a;">
+      <div class="container">
+        <h2>Source Code</h2>
+        <p class="mb-4">Check out our source code on Github!</p>
+        <a href="https://github.com/UWorldJK/powerwash" class="btn btn-lg btn-primary" target="_blank">Github</a>
+      </div>
+    </section>
 </body>
 
 
