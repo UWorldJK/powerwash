@@ -7,30 +7,11 @@ from matplotlib import pyplot  as plt
 class Cleaner:
     def __init__(self, data):
         self.df = pd.read_csv(data)
-        print('called')
-        
-        # #clean must return a Pandas DF
-        # self.dfClean = self.clean(self.df)
-        
-        # rows, cols = self.dfClean.shape
-        
-        # #imagining a screen of feedback after cleaning on front end, between insert and choices pages
-        # print("Your clean data has",rows,"entries, and", cols, "parameters")
-        # print("First few entries of your clean data...") #want this to be a dropdown on front end
-        # print(self.dfClean.head())
-        # return self.dfClean
-    
-    #to remove duplicate entries
-    #sounds good, because the data set is global we can jus do it like this
-
     def get_head(self):
         print('called get_head')
         return self.df.head()
-                
-
     def remove_duplicates(self):
         self.df = df.drop_duplicates(inplace = True)
-    
     #to remove NA rows and cols
     def remove_na(self):
         self.df = self.df.dropna(inplace = True)

@@ -18,4 +18,4 @@ ENV FLASK_ENV=development
 ENV PYTHONUNBUFFERED=1  
 
 # Use Gunicorn to serve the Flask app
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "main:app"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "--reload" "main:app"]
