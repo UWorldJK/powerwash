@@ -7,29 +7,65 @@ from matplotlib import pyplot  as plt
 class Cleaner:
     def __init__(self, data):
         self.df = pd.read_csv(data)
+        print('called')
+        
+        # #clean must return a Pandas DF
+        # self.dfClean = self.clean(self.df)
+        
+        # rows, cols = self.dfClean.shape
+        
+        # #imagining a screen of feedback after cleaning on front end, between insert and choices pages
+        # print("Your clean data has",rows,"entries, and", cols, "parameters")
+        # print("First few entries of your clean data...") #want this to be a dropdown on front end
+        # print(self.dfClean.head())
+        # return self.dfClean
+    
+    #to remove duplicate entries
+    #sounds good, because the data set is global we can jus do it like this
+
+    #return the head of the data (5 lines)
     def get_head(self):
-        print('called get_head')
         return self.df.head()
+    
+    #remove duplicate entries in the data
     def remove_duplicates(self):
-        self.df = df.drop_duplicates(inplace = True)
+        self.df.drop_duplicates(inplace = True)
+        return self.df
+    
     #to remove NA rows and cols
     def remove_na(self):
-        self.df = self.df.dropna(inplace = True)
+        self.df.dropna(inplace = True)
+        return self.df
     
+    #return data types of dataframe
     def get_data_types(self):
         return [self.df.dtypes]
     
-    def convert_time(self, data):
-        for col in data.columns:
+    #convert any time with "time" in column name to standard form
+    def convert_time(self):
+        for col in self.df.columns:
             lower = col.lower()
-            if "time" in col:
-                data[col] = data[col].dt.strftime('%H:%M:%S %p')
-                
-        return data
+            print(lower)
+            if "time" in lower:
+                self.df[col] = self.df[col].dt.strftime('%H:%M:%S %p')        
+        return self.df
+    
+    def row(self, num):
+        return self.df.loc[num,:]
+    
+    #convert any date with "date" in column name to standard form
+    def convert_date(self):
+        for col in self.df.columns:
+            lower = col.lower()
+            if ("date" in lower or "dt" in lower):
+                self.df[col] = pd.to_datetime(self.df[col])     
+        return self.df
     
     def normalize_data(self):
-        #ToDo
-        pass
+        for col in self.df.columns:
+            if self.df[col].dtype != object:
+                self.df[col] = (self.df[col] - self.df[col].min()) / (self.df[col].max() - self.df[col].min())
+        return self.df
     
     def get_structure(self):
         #ToDo
@@ -39,34 +75,35 @@ class Cleaner:
         #ToDo
         pass
     
-    #@DELETEWHENSEEN the time complexity of this is gonna be shit but I just cant think of a better way 
     def get_granularity(self):
         num_rows = self.df.shape[0]
         all_cols = [col for col in self.df]
         primary_keys = []
 
-        for col in all_cols:  
+        for col in all_cols:
             if self.df[col].nunique() == num_rows:
                 primary_keys.append(col)
                 return primary_keys
-
         for i in range(2, len(all_cols) + 1):
-            for subset in it.combinations(all_cols, i):
+            colCombinations = it.combinations(all_cols, i)
+            for subset in colCombinations:
                 subset_as_list = [*subset]
                 if self.df[subset_as_list].drop_duplicates().shape[0] == num_rows:
                     return subset_as_list
 
         return primary_keys if primary_keys else None
-
-
-    def clean(self, data):
-        data2 = self.remove_duplicates(data)
-        return data2
-        #ToDo
-        pass
+        
     
-    def clean(self, df):
-        dataDups = self.remove_duplicates(df)
-        dataTime = self.convert_time(dataDups)
-        return dataTime
+    def clean(self, duplicates=False, naEntries=False, convertTime=False, convertDate=False, normalize=False):
+        if(duplicates):
+            self.remove_duplicates()
+        if(naEntries):
+            self.remove_na()
+        if(convertTime):
+            self.convert_time()
+        if(convertDate):
+            self.convert_date()
+        if(normalize):
+            self.normalize_data()
+        return self.df
         
