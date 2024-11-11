@@ -87,13 +87,12 @@ app.use(
   })
 );
 
+app.use('/assets', express.static(path.join(__dirname, 'src/views/assets')));
+app.use('/images', express.static(path.join(__dirname, 'src/views/images')));
+
 //--------------------------------------------------------------\\
 
 //------------------------Api Routes-----------------------------\\
-
-app.get('/', (req, res) => {
-  res.render("pages/home");
-});
 
 
 app.get('/login', (req, res) => {
@@ -119,7 +118,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-
 app.get('/register', (req, res) => {
   res.render('pages/register');
 });
@@ -137,6 +135,30 @@ app.post('/register', async (req, res) => {
    
     res.render('pages/register', { message: 'error with registration, try again' });
   }
+});
+
+app.get('/forgot', (req, res) => {
+  res.render('pages/forgot');
+});
+
+app.get('/home', (req, res) => {
+  res.render('pages/home');
+});
+
+app.get('/logout', (req, res) => {
+  res.render('pages/logout');
+});
+
+app.get('/setup', (req, res) => {
+  res.render('pages/setup');
+});
+
+app.get('/about', (req, res) => {
+  res.render('pages/about');
+});
+
+app.get('/export', (req, res) => {
+  res.render('pages/export');
 });
 
 //--------------------------------------------------------------\\
