@@ -64,7 +64,8 @@ app.use(
 
 
 //------------------------App Settings---------------------------\\
-app.use('/images', express.static(__dirname + '/powerwash/src/views/images')); // change the path here
+app.use(express.static(path.join(__dirname, 'src/views')));
+
 
 // Register `hbs` as our view engine using its bound `engine()` function.
 app.engine('hbs', hbs.engine);

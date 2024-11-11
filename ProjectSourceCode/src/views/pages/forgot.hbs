@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-   Login
+   Forgot Password
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
@@ -15,11 +15,11 @@
   <!-- Nucleo Icons -->
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
   <!-- CSS Files -->
-  <link href="/assets/css/blk-design-system.css?v=1.0.0" rel="stylesheet" />
+  <link href="../assets/css/blk-design-system.css?v=1.0.0" rel="stylesheet" />
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg fixed-top" style="background-color: blueviolet;">
+  <nav class="navbar navbar-expand-lg fixed-top navbar-transparent " color-on-scroll="100">
     <div class="container">
       <div class="navbar-translate">
         <a class="navbar-brand" href="./home.html" rel="tooltip" title="" data-placement="bottom">
@@ -43,6 +43,32 @@
               <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="tim-icons icon-simple-remove"></i>
               </button>
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: blueviolet;">
+        <div class="container">
+          <div class="navbar-translate">
+            <a class="navbar-brand" href="./home.html" rel="tooltip" title="" data-placement="bottom">
+              <span>POWERWASH•</span>
+            </a>
+            <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-bar bar1"></span>
+              <span class="navbar-toggler-bar bar2"></span>
+              <span class="navbar-toggler-bar bar3"></span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <div class="navbar-collapse-header">
+              <div class="row">
+                <div class="col-6 collapse-brand">
+                  <a>
+                    PWSH•
+                  </a>
+                </div>
+                <div class="col-6 collapse-close text-right">
+                  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="tim-icons icon-simple-remove"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -75,48 +101,21 @@
      <div class="container" style="width:30%; transform: translate(-500px, 120px); background: #000; height: 500px; border-radius: 25px;">
       <form>
         <!-- Email input -->
-        <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 80px);">
+        <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 180px);">
           <input type="email" id="form2Example1" class="form-control" />
           <label class="form-label" for="form2Example1">Email address</label>
         </div>
       
-        <!-- Password input -->
-        <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 110px);">
-          <input type="password" id="form2Example2" class="form-control" />
-          <label class="form-label" for="form2Example2">Password</label>
-        </div>
-      
-        <!-- 2 column grid layout for inline styling -->
-        <div class="row mb-4" style="transform: translate(0px, 80px);">
-          <div class="col d-flex justify-content-center">
-          </div>
-      
-          <div class="col" style="transform: translate(-45px, 110px);">
-            <!-- Simple link -->
-            <a href="register.html">Register</a>
-          </div>
-        </div>
-
-      
         <!-- Submit button -->
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" style="transform: translate(0px, 80px);">Log In</button>
+        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" style="transform: translate(0px, 180px);">Send</button>
 
-        <div class="text-center" style="transform: translate(0px, 100px);">
-          <a href="https://github.com/UWorldJK/powerwash" target="_blank">
-            <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-              <i class="fab fa-github" style="transform: translate(0px, 10px);"></i>
-            </button>
-          </a>
-        </div>
-
-        <div class="col" style="transform: translate(140px, 120px);">
+        <div class="col" style="transform: translate(175px, 180px);">
           <!-- Simple link -->
-          <a href="forgot.html">Forgot Password</a>
+          <a href="login.html">Log In</a>
         </div>
       </form>
     </div>
 
-    
     <div class="container" style = "transform: translate(245px,-380px); background-color: blueviolet; width: 65%; height: 500px; border-radius: 25px;" overflow: hidden;>
       <!-- Image Cluster -->
       <div style="background-color: #000; border-radius: 25px; height: 470px; width:50%; transform: translate(0px, 15px);">
@@ -125,18 +124,17 @@
         <img src="../assets/img/etherum.png" style="transform:translate(120px, -1535px) scale(.2);"/>
         <img src="../assets/img/bitcoin.png" style="transform:translate(120px, -1985px) scale(.2);"/>
       </div>
-
+      
       <!-- Video -->
       <div>
-            <img src="../assets/videos//powerwashing-monkey.gif" style="transform: scale(.65) translate(625px, -825px); border-radius: 25px;">
+        <img src="../assets/videos//powerwashing-monkey.gif" style="transform: scale(.65) translate(625px, -825px); border-radius: 25px;">
       </div>
     </div>
-
 </body>
 
 
   <!--   Core JS Files   -->
-  <script src="/assets/js/core/jquery.min.js" type="text/javascript"></script>
+  <script src="../assets/js/core/jquery.min.js" type="text/javascript"></script>
   <script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
   <script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
