@@ -68,12 +68,10 @@ class Cleaner:
         return self.df
     
     def get_structure(self):
-        #ToDo
-        pass
+        return self.df.shape
     
-    def get_sample(self):
-        #ToDo
-        pass
+    def get_sample(self, n):
+        return self.df.sample(n, frac=1, replace=False)
     
     def get_granularity(self):
         num_rows = self.df.shape[0]
