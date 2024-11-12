@@ -32,12 +32,10 @@ class Cleaner:
         pass
     
     def get_structure(self):
-        #ToDo
-        pass
+        return self.df.shape
     
-    def get_sample(self):
-        #ToDo
-        pass
+    def get_sample(self, n):
+        return self.df.sample(n, frac=1, replace=False)
     
     #@DELETEWHENSEEN the time complexity of this is gonna be shit but I just cant think of a better way 
     def get_granularity(self):
@@ -62,8 +60,6 @@ class Cleaner:
     def clean(self, data):
         data2 = self.remove_duplicates(data)
         return data2
-        #ToDo
-        pass
     
     def clean(self, df):
         dataDups = self.remove_duplicates(df)

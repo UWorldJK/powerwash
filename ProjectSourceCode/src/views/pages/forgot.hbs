@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-   Register
+   Forgot Password
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
@@ -19,7 +19,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg fixed-top" style="background-color: blueviolet;">
+  <nav class="navbar navbar-expand-lg fixed-top navbar-transparent " color-on-scroll="100">
     <div class="container">
       <div class="navbar-translate">
         <a class="navbar-brand" href="./home.html" rel="tooltip" title="" data-placement="bottom">
@@ -43,6 +43,32 @@
               <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="tim-icons icon-simple-remove"></i>
               </button>
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: blueviolet;">
+        <div class="container">
+          <div class="navbar-translate">
+            <a class="navbar-brand" href="./home.html" rel="tooltip" title="" data-placement="bottom">
+              <span>POWERWASH•</span>
+            </a>
+            <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-bar bar1"></span>
+              <span class="navbar-toggler-bar bar2"></span>
+              <span class="navbar-toggler-bar bar3"></span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <div class="navbar-collapse-header">
+              <div class="row">
+                <div class="col-6 collapse-brand">
+                  <a>
+                    PWSH•
+                  </a>
+                </div>
+                <div class="col-6 collapse-close text-right">
+                  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="tim-icons icon-simple-remove"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -75,33 +101,15 @@
      <div class="container" style="width:30%; transform: translate(-500px, 120px); background: #000; height: 500px; border-radius: 25px;">
       <form>
         <!-- Email input -->
-        <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
-          <input type="email" id="email_input" class="form-control" />
+        <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 180px);">
+          <input type="email" id="form2Example1" class="form-control" />
           <label class="form-label" for="form2Example1">Email address</label>
-        </div>
-
-        <!-- Username input -->
-        <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
-          <input type="username" id="username_input" class="form-control" />
-          <label class="form-label" for="form2Example2">Username</label>
-        </div>
-      
-        <!-- Password input -->
-        <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
-          <input type="password" id="password_input" class="form-control" />
-          <label class="form-label" for="form2Example2">Password</label>
-        </div>
-
-        <!-- Confirm Password input -->
-        <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
-          <input type="password" id="confirm_password_input" class="form-control" />
-          <label class="form-label" for="form2Example1">Confirm Password</label>
         </div>
       
         <!-- Submit button -->
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" style="transform: translate(0px, 40px);">Register</button>
+        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" style="transform: translate(0px, 180px);">Send</button>
 
-        <div class="col" style="transform: translate(175px, 30px);">
+        <div class="col" style="transform: translate(175px, 180px);">
           <!-- Simple link -->
           <a href="login.html">Log In</a>
         </div>
@@ -116,7 +124,7 @@
         <img src="../assets/img/etherum.png" style="transform:translate(120px, -1535px) scale(.2);"/>
         <img src="../assets/img/bitcoin.png" style="transform:translate(120px, -1985px) scale(.2);"/>
       </div>
-
+      
       <!-- Video -->
       <div>
         <img src="../assets/videos//powerwashing-monkey.gif" style="transform: scale(.65) translate(625px, -825px); border-radius: 25px;">
