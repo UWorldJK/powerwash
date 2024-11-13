@@ -169,6 +169,14 @@ app.get('/export', (req, res) => {
   res.render('pages/export');
 });
 
+app.get('/profile', (req, res) => {
+  res.render('pages/profile');
+});
+
+app.get('/choice', (req, res) => {
+  res.render('pages/choice');
+});
+
 //--------------------------------------------------------------\\
 //----------------------Starting Server--------- ----------------\\
 
