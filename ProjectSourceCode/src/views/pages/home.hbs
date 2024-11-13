@@ -1,113 +1,84 @@
-<!doctype html>
-<html lang="en">
- <head>
-   <meta charset="utf-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-   <title>
-    Test
-   </title>
-   <!--     Fonts and icons     -->
-   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
-   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-   <!-- Nucleo Icons -->
-   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-   <!-- CSS Files -->
-   <link href="../assets/css/blk-design-system.css?v=1.0.0" rel="stylesheet" />
- </head>
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+{{>head}}
  
- <body>
-    <nav class="navbar navbar-expand-lg fixed-top navbar-transparent " color-on-scroll="100">
-        <div class="container">
-          <div class="navbar-translate">
-            <a class="navbar-brand" href="../pages/home.hbs" data-placement="bottom" target="_blank">
-              <span>POWERWASH</span>
-            </a>
-            <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-bar bar1"></span>
-              <span class="navbar-toggler-bar bar2"></span>
-              <span class="navbar-toggler-bar bar3"></span>
-            </button>
-          </div>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <div class="navbar-collapse-header">
-              <div class="row">
-                <div class="col-6 collapse-brand">
-                  <a>
-                    BLK•
-                  </a>
-                </div>
-                <div class="col-6 collapse-close text-right">
-                  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="tim-icons icon-simple-remove"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <ul class="navbar-nav">
-              <li class="nav-item p-0">
-                <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom" href="" target="_blank">
-                  <i class="fab fa-twitter"></i>
-                  <p class="d-lg-none d-xl-none">Twitter</p>
-                </a>
-              </li>
-              <li class="nav-item p-0">
-                <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom" href="" target="_blank">
-                  <i class="fab fa-facebook-square"></i>
-                  <p class="d-lg-none d-xl-none">Facebook</p>
-                </a>
-              </li>
-              <li class="nav-item p-0">
-                <a class="nav-link" rel="tooltip" title="Follow us on Instagram" data-placement="bottom" href="" target="_blank">
-                  <i class="fab fa-instagram"></i>
-                  <p class="d-lg-none d-xl-none">Instagram</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn btn-default d-none d-lg-block" href="javascript:void(0)" onclick="scrollToDownload()">
-                  <i class="tim-icons icon-cloud-download-93"></i> Download
-                </a>
-              </li>
+<body>
+
+    {{>nav}}
+
+  <div class="wrapper">
+      <header class="section text-center text-white" style="background: url('../assets/img/cleaning-bg.jpg') center center / cover;">
+      <div class="container">
+        <h1 class="display-3">Welcome to POWERWASH</h1>
+        <p class="lead">Your go-to solution for precise and efficient dataset cleaning</p>
+        <a href="./setup" class="btn btn-primary btn-lg mt-4">Get Started</a>
+      </div>
+    </header>
+    <!-- About Us Section -->
+    <section id="about" class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h2>About POWERWASH</h2>
+            <p>Powerwash is a streamlined tool for cleaning and analyzing datasets. Users can upload CSVs through an intuitive interface, where Python’s Pandas library takes care of data wrangling. With ready-to-use data, users can visualize insights using:</p>
+            <ul>
+                <li><strong>Box plots</strong></li>
+                <li><strong>Histograms</strong></li>
+                <li><strong>Bar plots</strong></li>
+                <li><strong>Scatter plots</strong></li>
             </ul>
+            <p>These visualizations are powered by Python’s Seaborn and Matplotlib libraries. PowerWash also identifies key data structure elements and offers easy exporting of findings as slideshows for convenient sharing. Our vision is to simplify data wrangling and provide foundational insights for <strong>exploratory data analysis (EDA)</strong>.</p>
+                      </div>
+          <div style="transform:scale(.75);" class="col-md-6">
+            <img src="../assets/img/pwshicon.png" class="img-fluid rounded" alt="About POWERWASH">
           </div>
         </div>
-      </nav>
- </body>
+      </div>
+    </section>
 
+    <!-- Services -->
+    <section id="services" class="bg-light py-5">
+      <div class="container">
+        <h2 class="text-center">Our Services</h2>
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <div class="card text-center shadow">
+              <div class="card-body">
+                <i class="tim-icons icon-trash-simple display-4 text-primary"></i>
+                <h5 class="card-title mt-3">Duplicate Removal</h5>
+                <p class="card-text">Remove duplicate records to keep your data clean and consistent.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card text-center shadow">
+              <div class="card-body">
+                <i class="tim-icons icon-chart-bar-32 display-4 text-success"></i>
+                <h5 class="card-title mt-3">Graphing Data</h5>
+                <p class="card-text">Visualize your data with insightful graphs to better understand trends and patterns.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card text-center shadow">
+              <div class="card-body">
+                <i class="tim-icons icon-sound-wave display-4 text-warning"></i>
+                <h5 class="card-title mt-3">Noise Reduction</h5>
+                <p class="card-text">Filter out irrelevant data points for a clear and reliable dataset.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 
-   <!--   Core JS Files   -->
-   <script src="../assets/js/core/jquery.min.js" type="text/javascript"></script>
-   <script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
-   <script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-   <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-   <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
-   <script src="../assets/js/plugins/bootstrap-switch.js"></script>
-   <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-   <script src="../assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
-   <!-- Chart JS -->
-   <script src="../assets/js/plugins/chartjs.min.js"></script>
-   <!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
-   <script src="../assets/js/plugins/moment.min.js"></script>
-   <script src="../assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
-   <!-- Control Center for Black UI Kit: parallax effects, scripts for the example pages etc -->
-   <script src="../assets/js/blk-design-system.min.js?v=1.0.0" type="text/javascript"></script>
-   <script>
-     $(document).ready(function() {
-       blackKit.initDatePicker();
-       blackKit.initSliders();
-     });
- 
-     function scrollToDownload() {
- 
-       if ($('.section-download').length != 0) {
-         $("html, body").animate({
-           scrollTop: $('.section-download').offset().top
-         }, 1000);
-       }
-     }
-   </script>
- </body>
+  {{>footer}}
+
+</body>
+
+  {{>js}}
  
  </html>
  
