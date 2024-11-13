@@ -1,44 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-
-{{>head}}
-
 <body>
-
-    {{>nav}}
-
-     <div class="container" style="width:30%; transform: translate(-500px, 120px); background: #000; height: 500px; border-radius: 25px;">
-      <form>
         <!-- Email input -->
         <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
-          <input type="email" id="email_input" class="form-control" />
-          <label class="form-label" for="form2Example1">Email address</label>
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="email" class="form-control" required>
+          {{email}}
         </div>
 
         <!-- Username input -->
         <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
-          <input type="username" id="username_input" class="form-control" />
-          <label class="form-label" for="form2Example2">Username</label>
-        </div>
-      
-        <!-- Password input -->
-        <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
-          <input type="password" id="password_input" class="form-control" />
-          <label class="form-label" for="form2Example2">Password</label>
+           <label for="username">Username:</label>
+          <input type="username" name="username" id="username" class="form-control" required>
+          {{username}}
+
         </div>
 
         <!-- Confirm Password input -->
         <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
-          <input type="password" id="confirm_password_input" class="form-control" />
-          <label class="form-label" for="form2Example1">Confirm Password</label>
+          <label for="password">Password:</label>
+          <input type="password" name="password" id="password" class="form-control" required>
+          {{password}}
         </div>
       
         <!-- Submit button -->
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" style="transform: translate(0px, 40px);">Register</button>
+        <button id="submit_button" type="submit" class="btn btn-primary btn-block mb-4" style="transform: translate(0px, 40px);">Register</button>
 
         <div class="col" style="transform: translate(175px, 30px);">
           <!-- Simple link -->
-          <a href="login">Log In</a>
+          <a href="/login">Log In</a>
         </div>
       </form>
     </div>
@@ -57,10 +45,4 @@
         <img src="../assets/videos//powerwashing-monkey.gif" style="transform: scale(.65) translate(625px, -825px); border-radius: 25px;">
       </div>
     </div>
-
-    {{>footer}}
 </body>
-
-{{>js}}
-
-</html>
