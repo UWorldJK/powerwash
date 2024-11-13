@@ -1,14 +1,21 @@
-<body>
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+  
+{{>head}}
+
+<body style="overflow:hidden">
+    
+    {{>nav}}
 
      <div class="container" style="width:30%; transform: translate(-500px, 120px); background: #000; height: 500px; border-radius: 25px;">
-      <form action="/login" method="POST">
+      <form>
         <!-- Email input -->
         <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 80px);">
           <label for="email">Email:</label>
           <input type="email" name="email" id="email" class="form-control" required>
           {{email}}
         </div>
-      
+
         <!-- Password input -->
         <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 110px);">
           <label for="password">Password:</label>
@@ -29,7 +36,7 @@
 
       
         <!-- Submit button -->
-        <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" style="transform: translate(0px, 80px);">Log In</button>
+        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" style="transform: translate(0px, 80px);">Log In</button>
 
         <div class="text-center" style="transform: translate(0px, 100px);">
           <a href="https://github.com/UWorldJK/powerwash" target="_blank">
