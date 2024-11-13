@@ -1,24 +1,19 @@
-<!DOCTYPE html>
-<html lang="en" class="h-100">
-  
-{{>head}}
-
 <body>
-    
-    {{>nav}}
 
      <div class="container" style="width:30%; transform: translate(-500px, 120px); background: #000; height: 500px; border-radius: 25px;">
-      <form>
+      <form action="/login" method="POST">
         <!-- Email input -->
         <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 80px);">
-          <input type="email" id="form2Example1" class="form-control" />
-          <label class="form-label" for="form2Example1">Email address</label>
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="email" class="form-control" required>
+          {{email}}
         </div>
       
         <!-- Password input -->
         <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 110px);">
-          <input type="password" id="form2Example2" class="form-control" />
-          <label class="form-label" for="form2Example2">Password</label>
+          <label for="password">Password:</label>
+          <input type="password" name="password" id="password" class="form-control" required>
+          {{password}}
         </div>
       
         <!-- 2 column grid layout for inline styling -->
@@ -34,7 +29,7 @@
 
       
         <!-- Submit button -->
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" style="transform: translate(0px, 80px);">Log In</button>
+        <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" style="transform: translate(0px, 80px);">Log In</button>
 
         <div class="text-center" style="transform: translate(0px, 100px);">
           <a href="https://github.com/UWorldJK/powerwash" target="_blank">
