@@ -141,7 +141,7 @@ app.post('/register', async (req, res) => {
     
     await db.none(query, values); 
 
-    res.redirect('/login');
+    res.redirect('/home');
   } catch (err) {
     console.error(err);
    
