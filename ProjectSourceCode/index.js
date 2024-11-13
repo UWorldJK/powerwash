@@ -12,6 +12,10 @@ const bodyParser = require('body-parser'); //middleware
 const session = require('express-session'); // To set the session object. To store or access session data, use the `req.session`, which is (generally) serialized as JSON by the store.
 const bcrypt = require('bcryptjs'); //  To hash passwords
 
+const multer = require('multer'); //reading files
+const upload = multer({ dest: 'uploads/' }); // Files will be stored in the 'uploads' directory
+
+
 //--------------------------------------------------------------\\
 
 //-------------------Connecting to Database---------------------\\
@@ -107,7 +111,7 @@ app.post('/login', async (req, res) => {
     console.log("TRYING TO FIX")	  
     console.log("LOGGING IN")
     console.log(req.body.email)
-    const user = await db.one('SELECT users.password FROM users WHERE users.email = $1', [req.body.email]);
+    const user = await db.one('SELECT users.password FROM users WHERE users.username = $1', [req.body.username]);
     const match = await bcrypt.compare(req.body.password, user.password);
     if (match) 
     {
@@ -117,7 +121,7 @@ app.post('/login', async (req, res) => {
     } 
     else 
     {
-      res.render('pages/login', { message: 'Incorrect username/password.' });
+      res.render('pages/login', {message: 'Incorrect username/password.' });
     }
   } catch (err) {
     console.error(err);
@@ -167,6 +171,74 @@ app.get('/about', (req, res) => {
 
 app.get('/export', (req, res) => {
   res.render('pages/export');
+});
+
+app.post('/upload', upload.single('file'), (req, res) => {
+  if (req.file) {
+      console.log("First line of the file content:");
+      const fs = require('fs');
+      const readline = require('readline');
+
+      const fileStream = fs.createReadStream(req.file.path);
+      const rl = readline.createInterface({
+          input: fileStream,
+          crlfDelay: Infinity
+      });
+
+      let firstLinePrinted = false; // Flag to track if the first line has been printed
+
+      rl.on('line', (line) => {
+          if (!firstLinePrinted) {
+              console.log(line);
+              firstLinePrinted = true;
+              rl.close(); // Close the stream after the first line is printed
+          }
+      });
+
+      rl.on('close', () => {
+          res.render('pages/choice');
+      });
+  } else {
+      res.status(400).send('No file uploaded.');
+  }
+});
+
+
+
+// Route to handle file upload and print the first line
+app.post('/upload', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
+
+  const filePath = path.join(__dirname, req.file.path);
+
+  // Read the file and print the first line
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) {
+      console.error('Error reading file:', err);
+      return res.status(500).send('Error reading file.');
+    }
+
+    const firstLine = data.split('\n')[0];
+    console.log('First line of the file:', firstLine);
+    
+
+    // Cleanup uploaded file
+    fs.unlink(filePath, (unlinkErr) => {
+      if (unlinkErr) console.error('Error deleting file:', unlinkErr);
+    });
+
+    
+  });
+});
+
+app.get('/profile', (req, res) => {
+  res.render('pages/profile');
+});
+
+app.get('/choice', (req, res) => {
+  res.render('pages/choice');
 });
 
 //--------------------------------------------------------------\\

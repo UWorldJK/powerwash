@@ -4,9 +4,9 @@
         {{!-- Login Form --}}
         <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 80px);">
           {{!-- Email --}}
-          <label for="email">Email:</label>
-          <input type="email" name="email" id="email" class="form-control" required>
-          {{email}}
+          <label for="username">Username:</label>
+          <input type="username" name="username" id="username" class="form-control" required>
+          {{username}}
 
           <br>
           {{!-- Password --}}
@@ -17,12 +17,14 @@
           <br>
 
           {{!-- Submit --}}
-          <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Log In</button>
-
-          {{!-- Register Link --}}
+          <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Log In</button>
+          
+          {{!-- Password reset --}}
           <div class="col d-flex justify-content-center">
-              <a href="/register">Register</a>
+              <a href="/forgot">Forgot Password?</a>
           </div> 
+      
+
 
           {{!-- Github Link --}}
           <div class="col d-flex justify-content-center">
@@ -32,12 +34,13 @@
                 </button>
               </a>
           </div>
-              
-          {{!-- Password reset --}}
+
+          {{!-- Register Link --}}
           <div class="col d-flex justify-content-center">
-              <a href="/forgot">Forgot Password?</a>
+              <a href="/register">Register</a>
           </div> 
-      
+              
+
         </div>
       </form>
     </div>
