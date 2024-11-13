@@ -97,6 +97,9 @@ app.use('/images', express.static(path.join(__dirname, 'src/views/images')));
 //--------------------------------------------------------------\\
 
 //------------------------Api Routes-----------------------------\\
+app.get('/home', (req, res) => {
+  res.json({status: 'success', message: 'Welcome!'});
+});
 
 
 app.get('/login', (req, res) => {
@@ -245,7 +248,7 @@ app.get('/choice', (req, res) => {
 //----------------------Starting Server--------- ----------------\\
 
 // starting the server and keeping the connection open to listen for more requests
-app.listen(3000);
+module.exports = app.listen(3000);
 console.log('Server is listening on port 3000');
 
 //--------------------------------------------------------------\\
