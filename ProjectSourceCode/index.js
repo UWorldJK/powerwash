@@ -104,7 +104,9 @@ app.get('/', (req, res) => {
 });
 app.post('/login', async (req, res) => {
   try {
-    const user = await db.one('SELECT users.password FROM users WHERE users.username = $1', [req.body.username]);
+    console.log("LOGGING IN")
+    console.log(req.body.email)
+    const user = await db.one('SELECT users.password FROM users WHERE users.email = $1', [req.body.email]);
     const match = await bcrypt.compare(req.body.password, user.password);
     if (match) 
     {
@@ -127,13 +129,10 @@ app.get('/register', (req, res) => {
 });
 app.post('/register', async (req, res) => {
   try {
-    console.log("HELLO")
-    console.log(req.body.password)
-    
+    console.log("REGISTERING")
     const hash = await bcrypt.hash(req.body.password, 10);
     const query = 'INSERT INTO users (email, username, password) VALUES ($1, $2, $3)';
     const values = [req.body.email, req.body.username, hash];
-    console.log(req.body.email)
     
     await db.none(query, values); 
 
