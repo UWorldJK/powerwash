@@ -1,24 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-  <title>
-   Login
-  </title>
-  <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-  <!-- Nucleo Icons -->
-  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-  <!-- CSS Files -->
-  <link href="../assets/css/blk-design-system.css?v=1.0.0" rel="stylesheet" />
-</head>
+<html lang="en" class="h-100">
+  
+{{>head}}
 
 <body>
+    
+    {{>nav}}
+
      <div class="container" style="width:30%; transform: translate(-500px, 120px); background: #000; height: 500px; border-radius: 25px;">
       <form>
         <!-- Email input -->
@@ -40,7 +28,7 @@
       
           <div class="col" style="transform: translate(-45px, 110px);">
             <!-- Simple link -->
-            <a href="register.html">Register</a>
+            <a href="/register">Register</a>
           </div>
         </div>
 
@@ -58,7 +46,7 @@
 
         <div class="col" style="transform: translate(140px, 120px);">
           <!-- Simple link -->
-          <a href="forgot.html">Forgot Password</a>
+          <a href="/forgot">Forgot Password</a>
         </div>
       </form>
     </div>
@@ -81,28 +69,6 @@
 
 </body>
 
-
-  <!--   Core JS Files   -->
-  <script src="../assets/js/core/jquery.min.js" type="text/javascript"></script>
-  <script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
-  <script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
-  <script src="../assets/js/plugins/bootstrap-switch.js"></script>
-  <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-  <script src="../assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
-  <!-- Chart JS -->
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
-  <!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
-  <script src="../assets/js/plugins/moment.min.js"></script>
-  <script src="../assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
-  <!-- Control Center for Black UI Kit: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/blk-design-system.min.js?v=1.0.0" type="text/javascript"></script>
-  <script>
-    $(document).ready(function() {
-      blackKit.initDatePicker();
-      blackKit.initSliders();
-    });
-  </script>
+{{>js}}
 
 </html>
