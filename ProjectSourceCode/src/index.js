@@ -19,8 +19,8 @@ const bcrypt = require('bcryptjs'); //  To hash passwords
 // `ExpressHandlebars` instance and configure the layouts and partials dir.
 const hbs = handlebars.create({
     extname: 'hbs',
-    layoutsDir: path.join(__dirname, 'src/views/layouts'),
-    partialsDir: path.join(__dirname, 'src/views/partials'),
+    layoutsDir: __dirname + 'powerwash/src/views/layouts',
+    partialsDir: __dirname + 'powerwash/src/views/partials',
   });
 
 // database configuration
@@ -64,12 +64,12 @@ app.use(
 
 
 //------------------------App Settings---------------------------\\
-app.use('/images', express.static(__dirname + 'src/views/images')); // change the path here
+app.use('/images', express.static(__dirname + '/powerwash/src/views/images')); // change the path here
 
 // Register `hbs` as our view engine using its bound `engine()` function.
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'src/views'));
+app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json()); // specify the usage of JSON for parsing request body.
 
 // initialize session variables
@@ -87,87 +87,11 @@ app.use(
   })
 );
 
-app.use('/assets', express.static(path.join(__dirname, 'src/views/assets')));
-app.use('/images', express.static(path.join(__dirname, 'src/views/images')));
-
 //--------------------------------------------------------------\\
 
 //------------------------Api Routes-----------------------------\\
 
 
-app.get('/login', (req, res) => {
-  res.render('pages/login');
-});
-
-app.get('/', (req, res) => {
-  res.render('pages/login');
-});
-app.post('/login', async (req, res) => {
-  try {
-    const user = await db.one('SELECT users.password FROM users WHERE users.username = $1', [req.body.username]);
-    const match = await bcrypt.compare(req.body.password, user.password);
-    if (match) 
-    {
-      req.session.user = user;
-      req.session.save();
-      res.redirect('/home');
-    } 
-    else 
-    {
-      res.render('pages/login', { message: 'Incorrect username/password.' });
-    }
-  } catch (err) {
-    console.error(err);
-    res.redirect('/register');
-  }
-});
-
-app.get('/register', (req, res) => {
-  res.render('pages/register');
-});
-app.post('/register', async (req, res) => {
-  try {
-    console.log("HELLO")
-    console.log(req.body.password)
-    
-    const hash = await bcrypt.hash(req.body.password, 10);
-    const query = 'INSERT INTO users (email, username, password) VALUES ($1, $2, $3)';
-    const values = [req.body.email, req.body.username, hash];
-    console.log(req.body.email)
-    
-    await db.none(query, values); 
-
-    res.redirect('/login');
-  } catch (err) {
-    console.error(err);
-   
-    res.render('pages/register', { message: 'error with registration, try again' });
-  }
-});
-
-app.get('/forgot', (req, res) => {
-  res.render('pages/forgot');
-});
-
-app.get('/home', (req, res) => {
-  res.render('pages/home');
-});
-
-app.get('/logout', (req, res) => {
-  res.render('pages/logout');
-});
-
-app.get('/setup', (req, res) => {
-  res.render('pages/setup');
-});
-
-app.get('/about', (req, res) => {
-  res.render('pages/about');
-});
-
-app.get('/export', (req, res) => {
-  res.render('pages/export');
-});
 
 //--------------------------------------------------------------\\
 //----------------------Starting Server--------- ----------------\\
