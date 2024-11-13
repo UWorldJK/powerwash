@@ -41,7 +41,17 @@ def getFile():
             # Read CSV
             #df = pd.read_csv(io.StringIO(file_content))
             data = clean.Cleaner(io.StringIO(file_content))
+            print("TYPES")
+            print(data.get_data_types())
+            print("HEAD") 
             print(data.get_head())
+            print("GRANULARITY")
+            print(data.get_granularity())
+            print("COL")
+            row = data.row(3)
+            print(row)
+            data.clean(duplicates=True, normalize=True, naEntries=True, convertTime=True, convertDate=True)
+            
             print(data.get_granularity())
 
             return jsonify({

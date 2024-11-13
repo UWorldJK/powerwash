@@ -98,15 +98,21 @@ app.use('/images', express.static(path.join(__dirname, 'src/views/images')));
 app.get('/login', (req, res) => {
   res.render('pages/login');
 });
+
+app.get('/', (req, res) => {
+  res.render('pages/login');
+});
 app.post('/login', async (req, res) => {
   try {
-    const user = await db.one('SELECT users.password FROM users WHERE users.username = $1', [req.body.username]);
+    console.log("LOGGING IN")
+    console.log(req.body.email)
+    const user = await db.one('SELECT users.password FROM users WHERE users.email = $1', [req.body.email]);
     const match = await bcrypt.compare(req.body.password, user.password);
     if (match) 
     {
       req.session.user = user;
       req.session.save();
-      res.redirect('/discover');
+      res.redirect('/home');
     } 
     else 
     {
@@ -123,9 +129,10 @@ app.get('/register', (req, res) => {
 });
 app.post('/register', async (req, res) => {
   try {
+    console.log("REGISTERING")
     const hash = await bcrypt.hash(req.body.password, 10);
-    const query = 'INSERT INTO users (username, password) VALUES ($1, $2)';
-    const values = [req.body.username, hash];
+    const query = 'INSERT INTO users (email, username, password) VALUES ($1, $2, $3)';
+    const values = [req.body.email, req.body.username, hash];
     
     await db.none(query, values); 
 
