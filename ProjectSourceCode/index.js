@@ -98,6 +98,10 @@ app.use('/images', express.static(path.join(__dirname, 'src/views/images')));
 app.get('/login', (req, res) => {
   res.render('pages/login');
 });
+
+app.get('/', (req, res) => {
+  res.render('pages/login');
+});
 app.post('/login', async (req, res) => {
   try {
     console.log("LOGGING IN")
@@ -108,7 +112,7 @@ app.post('/login', async (req, res) => {
     {
       req.session.user = user;
       req.session.save();
-      res.redirect('/discover');
+      res.redirect('/home');
     } 
     else 
     {
@@ -125,9 +129,10 @@ app.get('/register', (req, res) => {
 });
 app.post('/register', async (req, res) => {
   try {
+    console.log("REGISTERING")
     const hash = await bcrypt.hash(req.body.password, 10);
-    const query = 'INSERT INTO users (username, password) VALUES ($1, $2)';
-    const values = [req.body.username, hash];
+    const query = 'INSERT INTO users (email, username, password) VALUES ($1, $2, $3)';
+    const values = [req.body.email, req.body.username, hash];
     
     await db.none(query, values); 
 
@@ -161,14 +166,6 @@ app.get('/about', (req, res) => {
 
 app.get('/export', (req, res) => {
   res.render('pages/export');
-});
-
-app.get('/choice', (req, res) => {
-  res.render('pages/choice');
-});
-
-app.get('/profile', (req, res) => {
-  res.render('pages/profile');
 });
 
 //--------------------------------------------------------------\\
