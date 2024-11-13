@@ -104,6 +104,7 @@ app.get('/', (req, res) => {
 });
 app.post('/login', async (req, res) => {
   try {
+    console.log("TRYING TO FIX")	  
     console.log("LOGGING IN")
     console.log(req.body.email)
     const user = await db.one('SELECT users.password FROM users WHERE users.email = $1', [req.body.email]);
