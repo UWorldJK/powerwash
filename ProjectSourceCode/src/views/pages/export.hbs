@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Data</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .upload-area {
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+        .upload-area.dragover {
+            background-color: #444;
+        }
+        .upload-area input[type="file"] {
+            display: none;
+        }
+        .paper-clip-icon {
+            font-size: 24px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="upload-area" id="upload-area">
+    <i class="fas fa-paperclip paper-clip-icon" id="paper-clip"></i> <!-- Paper clip icon -->
+    <p>Drag and drop a file here or click to upload</p>
+    <input type="file" id="file-input" multiple>
+</div>
+
+<script>
+    const uploadArea = document.getElementById('upload-area');
+    const fileInput = document.getElementById('file-input');
+    const paperClip = document.getElementById('paper-clip');
+
+    uploadArea.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    paperClip.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent click from triggering the main upload area click
+        fileInput.click();
+    });
+
+    uploadArea.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (event) => {
+        event.preventDefault();
+        uploadArea.classList.remove('dragover');
+        const files = event.dataTransfer.files;
+        handleFiles(files);
+    });
+
+    fileInput.addEventListener('change', () => {
+        const files = fileInput.files;
+        handleFiles(files);
+    });
+
+    function handleFiles(files) {
+        for (const file of files) {
+            console.log(`File selected: ${file.name}`);
+        }
+        uploadFile(files[0]);
+    }
+
+    async function uploadFile(file) {
+        if (!file) {
+            alert("No file selected.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            const response = await fetch('http://localhost:5001/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const result = await response.text();
+                console.log("File uploaded successfully:", result);
+                alert("File uploaded successfully!");
+            } else {
+                console.error("Error uploading file:", response.statusText);
+                alert("Failed to upload file.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred while uploading the file.");
+        }
+    }
+</script>
+
+</body>
+</html>
