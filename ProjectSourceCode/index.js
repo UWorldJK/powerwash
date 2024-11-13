@@ -123,6 +123,9 @@ app.get('/register', (req, res) => {
 });
 app.post('/register', async (req, res) => {
   try {
+    console.log("HELLO")
+    console.log(req.body.password)
+    
     const hash = await bcrypt.hash(req.body.password, 10);
     const query = 'INSERT INTO users (email, username, password) VALUES ($1, $2, $3)';
     const values = [req.body.email, req.body.username, hash];
