@@ -12,8 +12,17 @@
     "nodemon": "2.0.20",
     "pg-promise": "^10.11.1"
   },
+  "devDependencies": {
+    "nodemon": "^2.0.7",
+    "mocha": "^6.2.2",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "npm-run-all": "^4.1.5"
+  },
   "scripts": {
     "prestart": "npm install",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "test": "mocha",
+    "testandrun": "npm run prestart && npm run test && npm start"
   }
 }
