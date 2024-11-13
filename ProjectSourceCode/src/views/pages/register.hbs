@@ -8,37 +8,41 @@
     {{>nav}}
 
      <div class="container" style="width:30%; transform: translate(-500px, 120px); background: #000; height: 500px; border-radius: 25px;">
-      <form>
+      <form action="/register" method="POST">
         <!-- Email input -->
         <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
-          <input type="email" id="email_input" class="form-control" />
           <label class="form-label" for="form2Example1">Email address</label>
+          <input type="email" id="email" class="form-control" />
+          {{email}}
         </div>
 
         <!-- Username input -->
         <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
+            <label class="form-label" for="form2Example2">Username</label>
           <input type="username" id="username_input" class="form-control" />
-          <label class="form-label" for="form2Example2">Username</label>
+          {{username}}
+
         </div>
       
         <!-- Password input -->
         <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
-          <input type="password" id="password_input" class="form-control" />
           <label class="form-label" for="form2Example2">Password</label>
+          <input type="password" id="password_input" class="form-control" />
         </div>
 
         <!-- Confirm Password input -->
         <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
-          <input type="password" id="confirm_password_input" class="form-control" />
           <label class="form-label" for="form2Example1">Confirm Password</label>
+          <input type="password" id="confirm_password_input" class="form-control" />
+          {{password}}
         </div>
       
         <!-- Submit button -->
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" style="transform: translate(0px, 40px);">Register</button>
+        <button id="submit_button" type="submit" class="btn btn-primary btn-block mb-4" style="transform: translate(0px, 40px);">Register</button>
 
         <div class="col" style="transform: translate(175px, 30px);">
           <!-- Simple link -->
-          <a href="login">Log In</a>
+          <a href="/login">Log In</a>
         </div>
       </form>
     </div>

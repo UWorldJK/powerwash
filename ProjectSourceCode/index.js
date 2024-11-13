@@ -106,7 +106,7 @@ app.post('/login', async (req, res) => {
     {
       req.session.user = user;
       req.session.save();
-      res.redirect('/discover');
+      res.redirect('/home');
     } 
     else 
     {
@@ -124,8 +124,9 @@ app.get('/register', (req, res) => {
 app.post('/register', async (req, res) => {
   try {
     const hash = await bcrypt.hash(req.body.password, 10);
-    const query = 'INSERT INTO users (username, password) VALUES ($1, $2)';
-    const values = [req.body.username, hash];
+    const query = 'INSERT INTO users (email, username, password) VALUES ($1, $2, $3)';
+    const values = [req.body.email, req.body.username, hash];
+    console.log(req.body.email)
     
     await db.none(query, values); 
 
