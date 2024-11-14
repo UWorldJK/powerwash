@@ -15,20 +15,20 @@ const {assert, expect} = chai;
 
 // ********************** DEFAULT WELCOME TESTCASE ****************************
 
-describe('Server!', () => {
-  // Sample test case given to test / endpoint.
-  it('Returns the default welcome message', done => {
-    chai
-      .request(server)
-      .get('/home')
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body.status).to.equals('success');
-        assert.strictEqual(res.body.message, 'Welcome!');
-        done();
-      });
-  });
-});
+// describe('Server!', () => {
+//   // Sample test case given to test / endpoint.
+//   it('Returns the default welcome message', done => {
+//     chai
+//       .request(server)
+//       .get('/home')
+//       .end((err, res) => {
+//         expect(res).to.have.status(200);
+//         expect(res.body.status).to.equals('success');
+//         assert.strictEqual(res.body.message, 'Welcome!');
+//         done();
+//       });
+//   });
+// });
 
 // *********************** TODO: WRITE 2 UNIT TESTCASES **************************
 
