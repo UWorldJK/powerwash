@@ -1,0 +1,52 @@
+/* Container styles */
+.chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 30px;
+    margin: 40px auto;
+    max-width: 800px;
+    border-radius: 25px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    transform: translate(0px, -50px);
+}
+
+/* Chip styles */
+.chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #444, #222);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap; /* Prevent chips from wrapping */
+    height: 40px; /* Consistent height for all chips */
+    max-width: 100%;
+}
+
+/* Chip hover effect */
+.chip:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #555, #333);
+}
+
+/* Highlight selected chip */
+.chip.selected {
+    background: linear-gradient(135deg, #4caf50, #2e7d32);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+    color: #fff;
+}
+
+/* Smooth transition for chip selection */
+.chip.selected:hover {
+    transform: translateY(-2px) scale(1.02);
+}
