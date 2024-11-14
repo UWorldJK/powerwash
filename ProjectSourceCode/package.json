@@ -22,7 +22,7 @@
   "scripts": {
     "prestart": "npm install",
     "start": "nodemon index.js",
-    "test": "mocha",
+    "test": "mocha src/test/server.spec.js",
     "testandrun": "npm run prestart && npm run test && npm start"
   }
 }

@@ -137,17 +137,21 @@ app.get('/register', (req, res) => {
 });
 app.post('/register', async (req, res) => {
   try {
+
+    const { email, username, password } = req.body;
+
+    if (!email || !username || !password) {
+      return res.status(400).json({ message: 'Please fill out all fields' });
+    } 
     console.log("REGISTERING")
-    const hash = await bcrypt.hash(req.body.password, 10);
+    const hash = await bcrypt.hash(password, 10);
     const query = 'INSERT INTO users (email, username, password) VALUES ($1, $2, $3)';
-    const values = [req.body.email, req.body.username, hash];
+    const values = [email, username, hash];
     
     await db.none(query, values); 
-
-    res.redirect('/login');
+    res.redirect('/home');
   } catch (err) {
-    console.error(err);
-   
+    console.error(err); 
     res.render('pages/register', { message: 'error with registration, try again' });
   }
 });
