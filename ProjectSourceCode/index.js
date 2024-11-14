@@ -98,7 +98,7 @@ app.use('/images', express.static(path.join(__dirname, 'src/views/images')));
 
 //------------------------Api Routes-----------------------------\\
 app.get('/home', (req, res) => {
-  res.json({status: 'success', message: 'Welcome!'});
+  res.render('pages/home')
 });
 
 
