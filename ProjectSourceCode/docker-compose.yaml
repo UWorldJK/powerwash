@@ -21,7 +21,7 @@ services:
       - '3000:3000'
     volumes:
       - ./:/home/node/app
-    command: 'npm start'
+    command: 'npm run testandrun'
   app:
     build:
       context: .

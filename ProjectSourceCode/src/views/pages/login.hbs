@@ -1,46 +1,46 @@
 <body>
-     <div class="container" style="width:30%; transform: translate(-500px, 120px); background: #000; height: 500px; border-radius: 25px;">
+    <div class="container" style="width:30%; transform: translate(-500px, 120px); background: #000; height: 500px; border-radius: 25px;">
       <form action="/login" method="POST">
-        <!-- Email input -->
+        {{!-- Login Form --}}
         <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 80px);">
-          <label for="email">Email:</label>
-          <input type="email" name="email" id="email" class="form-control" required>
-          {{email}}
-        </div>
-      
-        <!-- Password input -->
-        <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 110px);">
+          {{!-- Email --}}
+          <label for="username">Username:</label>
+          <input type="username" name="username" id="username" class="form-control" required>
+          {{username}}
+
+          <br>
+          {{!-- Password --}}
           <label for="password">Password:</label>
           <input type="password" name="password" id="password" class="form-control" required>
           {{password}}
-        </div>
-      
-        <!-- 2 column grid layout for inline styling -->
-        <div class="row mb-4" style="transform: translate(0px, 80px);">
+
+          <br>
+
+          {{!-- Submit --}}
+          <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Log In</button>
+          
+          {{!-- Password reset --}}
           <div class="col d-flex justify-content-center">
-          </div>
+              <a href="/forgot">Forgot Password?</a>
+          </div> 
       
-          <div class="col" style="transform: translate(-45px, 110px);">
-            <!-- Simple link -->
-            <a href="register">Register</a>
+
+
+          {{!-- Github Link --}}
+          <div class="col d-flex justify-content-center">
+             <a href="https://github.com/UWorldJK/powerwash" target="_blank">
+                <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                  <i class="fab fa-github"></i>
+                </button>
+              </a>
           </div>
-        </div>
 
-      
-        <!-- Submit button -->
-        <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" style="transform: translate(0px, 80px);">Log In</button>
+          {{!-- Register Link --}}
+          <div class="col d-flex justify-content-center">
+              <a href="/register">Register</a>
+          </div> 
+              
 
-        <div class="text-center" style="transform: translate(0px, 100px);">
-          <a href="https://github.com/UWorldJK/powerwash" target="_blank">
-            <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-              <i class="fab fa-github" style="transform: translate(0px, 10px);"></i>
-            </button>
-          </a>
-        </div>
-
-        <div class="col" style="transform: translate(140px, 120px);">
-          <!-- Simple link -->
-          <a href="forgot">Forgot Password</a>
         </div>
       </form>
     </div>

@@ -1,35 +1,46 @@
 <body>
     <div class="container" style="width:30%; transform: translate(-500px, 120px); background: #000; height: 500px; border-radius: 25px;">
-      <form>
-        <!-- Email input -->
+      <form action="/register" method="POST">
         <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
+
+          {{!-- Email --}}
           <label for="email">Email:</label>
           <input type="email" name="email" id="email" class="form-control" required>
           {{email}}
-        </div>
 
-        <!-- Username input -->
-        <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
-           <label for="username">Username:</label>
+          <br>
+
+          {{!-- Username --}}
+          <label for="username">Username:</label>
           <input type="username" name="username" id="username" class="form-control" required>
           {{username}}
 
-        </div>
+          <br>
 
-        <!-- Confirm Password input -->
-        <div data-mdb-input-init class="form-outline mb-4" style="transform: translate(0px, 40px);">
+          {{!-- Password --}}
           <label for="password">Password:</label>
           <input type="password" name="password" id="password" class="form-control" required>
           {{password}}
-        </div>
-      
-        <!-- Submit button -->
-        <button id="submit_button" type="submit" class="btn btn-primary btn-block mb-4" style="transform: translate(0px, 40px);">Register</button>
 
-        <div class="col" style="transform: translate(175px, 30px);">
-          <!-- Simple link -->
-          <a href="/login">Log In</a>
-        </div>
+          <br>
+
+          {{!-- Submit --}}
+          <button id="submit_button" type="submit" class="btn btn-primary btn-block mb-4">Register</button>
+
+          <div class="col d-flex justify-content-center">
+              <a href="/login">Already have an account?</a>
+          </div> 
+
+          {{!-- Github Link --}}
+          <div class="col d-flex justify-content-center">
+             <a href="https://github.com/UWorldJK/powerwash" target="_blank">
+                <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                  <i class="fab fa-github"></i>
+                </button>
+              </a>
+          </div>
+
+        </div>    
       </form>
     </div>
 

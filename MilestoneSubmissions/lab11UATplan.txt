@@ -1,0 +1,11 @@
+TODO: Create UAT plans for at least 3 features
+  Feature 1: File Submission Type
+  - The feature of only allowing .csv files will be tested.
+  - It will be tested locally and manually by uploading files and ensuring that non-.csv file types are not loaded into the site and an error is given.
+  Feature 2: User Login
+  - The feature of a user's login info, (username, password, email address) being accurately saved in a database and allowing for logging in and out of existing users.
+  - This feature will be tested on the cloud by sending a post request to the /login page, getting those values from the database, and comparing them to what was inputted in the post       
+    request.
+  Feature 3: Data Cleaning
+  - The 'cleanliness' of the data will be tested.
+  - It will be tested manually and locally, by inputting a data set and comparing the cleaned data from the program, to an expected result which will be cleaned manually by the tester.
