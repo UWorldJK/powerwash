@@ -1,6 +1,11 @@
 // ********************** Initialize server **********************************
 
+
 const server = require('../../index'); //TODO: Make sure the path to your index.js is correctly added
+
+const server = require('../index'); //TODO: Make sure the path to your index.js is correctly added
+
+
 // ********************** Import Libraries ***********************************
 
 const chai = require('chai'); // Chai HTTP provides an interface for live integration testing of the API's.
@@ -27,6 +32,7 @@ describe('Server!', () => {
 });
 
 // *********************** TODO: WRITE 2 UNIT TESTCASES **************************
+
 //test to see if we require a username.
 
 describe('Testing Add User with all Fields', () => {
