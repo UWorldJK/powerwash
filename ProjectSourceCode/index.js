@@ -215,30 +215,33 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 // Route to handle file upload and print the first line
 app.post('/upload', upload.single('file'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).send('No file uploaded.');
-  }
+  res.redirect('/choices');
+  // if (!req.file) {
+  //   return res.status(400).send('No file uploaded.');
+  // }
 
-  const filePath = path.join(__dirname, req.file.path);
+  // const filePath = path.join(__dirname, req.file.path);
 
-  // Read the file and print the first line
-  fs.readFile(filePath, 'utf-8', (err, data) => {
-    if (err) {
-      console.error('Error reading file:', err);
-      return res.status(500).send('Error reading file.');
-    }
+  // // Read the file and print the first line
+  // fs.readFile(filePath, 'utf-8', (err, data) => {
+  //   if (err) {
+  //     console.error('Error reading file:', err);
+  //     return res.status(500).send('Error reading file.');
+  //   }
 
-    const firstLine = data.split('\n')[0];
-    console.log('First line of the file:', firstLine);
-    
+  //   const firstLine = data.split('\n')[0];
+  //   console.log('First line of the file:', firstLine);
 
-    // Cleanup uploaded file
-    fs.unlink(filePath, (unlinkErr) => {
-      if (unlinkErr) console.error('Error deleting file:', unlinkErr);
-    });
+  //   // Cleanup uploaded file
+  //   fs.unlink(filePath, (unlinkErr) => {
+  //     if (unlinkErr) {
+  //       console.error('Error deleting file:', unlinkErr);
+  //     }
+  //   });
 
-    
-  });
+  //   // Redirect to /choices after processing
+  //   res.redirect('/choices');
+  // });
 });
 
 app.get('/profile', (req, res) => {

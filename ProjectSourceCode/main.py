@@ -3,9 +3,11 @@ import io
 import pandas as pd
 import cleaner as clean
 import time
+from flask_cors import CORS
 
 app = Flask(__name__)
 data = None
+CORS(app)
 
 
 def returnHead():
@@ -19,9 +21,6 @@ def get_eda():
     to_ret.append(data.get_structure())
     to_ret.append(data.get_data_types())
     return to_ret
-
-
-
 
 @app.route("/upload", methods=["POST"])
 def getFile():
@@ -62,11 +61,6 @@ def getFile():
             return jsonify({
                 'message': "the final was not correctly uploaded, exception e caught"
             }), 400
-
-
-
-
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False)

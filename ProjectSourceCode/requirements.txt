@@ -14,3 +14,4 @@ psycopg2-binary==2.9.7 # PostgreSQL database adapter for Python
 missingno==0.5.2       # For visualizing missing data
 joblib==1.3.2          # For efficient memory usage and parallel processing
 gunicorn==20.1.0
+flask-cors==5.0.0
