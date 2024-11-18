@@ -137,29 +137,29 @@ app.get('/register', (req, res) => {
 });
 app.post('/register', async (req, res) => {
   try {
+    // Destructure the required fields from the request body
+    const { email, username, password, firstname, lastname, country } = req.body;
 
-    const { email, username, password } = req.body;
-
-    if (!email || !username || !password) {
+    // Validate that all required fields are provided
+    if (!email || !username || !password || !firstname || !lastname || !country) {
       return res.status(400).json({ message: 'Please fill out all fields' });
-    } 
-
+    }
+    
     console.log("REGISTERING")
     const hash = await bcrypt.hash(password, 10);
     const query = 'INSERT INTO users (email, username, password) VALUES ($1, $2, $3)';
     const values = [email, username, hash];
     await db.oneOrNone(query, values); 
+
     res.redirect('/home');
 
   } catch (err) {
-    console.error(err); 
-    res.render('pages/register', { message: 'error with registration, try again' });
+    // Handle any errors during the registration process
+    console.error(err);
+    res.render('pages/register', { message: 'Error with registration, try again' });
   }
 });
 
-app.get('/forgot', (req, res) => {
-  res.render('pages/forgot');
-});
 
 app.get('/home', (req, res) => {
   res.render('pages/home');
