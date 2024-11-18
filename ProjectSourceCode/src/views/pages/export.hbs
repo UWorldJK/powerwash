@@ -41,26 +41,85 @@
 </head>
 <body>
 
-<form id="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
-        <div class="upload-area" id="upload-area">
-            <i class="fas fa-paperclip paper-clip-icon" id="paper-clip"></i>
-            <p>Upload Data For Cleaning</p>
-            <input type="file" name="file" id="file-input" multiple>
-        </div>
-    </form>
+<div class="upload-area" id="upload-area">
+    <i class="fas fa-paperclip paper-clip-icon" id="paper-clip"></i> <!-- Paper clip icon -->
+    <p>Drag and drop a file here or click to upload</p>
+    <input type="file" id="file-input" multiple>
+</div>
 
-    <script>
-        const uploadArea = document.getElementById('upload-area');
-        const fileInput = document.getElementById('file-input');
+<script>
+    const uploadArea = document.getElementById('upload-area');
+    const fileInput = document.getElementById('file-input');
+    const paperClip = document.getElementById('paper-clip');
 
-        uploadArea.addEventListener('click', () => {
-            fileInput.click();
+    uploadArea.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    paperClip.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent click from triggering the main upload area click
+        fileInput.click();
+    });
+
+    uploadArea.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (event) => {
+        event.preventDefault();
+        uploadArea.classList.remove('dragover');
+        const files = event.dataTransfer.files;
+        handleFiles(files);
+    });
+
+    fileInput.addEventListener('change', () => {
+        const files = fileInput.files;
+        handleFiles(files);
+    });
+
+    function handleFiles(files) {
+        for (const file of files) {
+            console.log(`File selected: ${file.name}`);
+        }
+        uploadFile(files[0]);
+    }
+
+    async function uploadFile(file) {
+        if (!file) {
+            alert("No file selected.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", file);
+    try {
+        const response = await fetch('http://localhost:5001/upload', {
+            method: 'POST',
+            body: formData
         });
 
-        fileInput.addEventListener('change', () => {
-            document.getElementById('upload-form').submit();
-        });
-    </script>
+        if (response.ok) {
+            const result = await response.json();
+            console.log("File uploaded successfully:", result);
+            window.location.href = '/choice';
+            //alert(result.message || "File uploaded successfully!");
+
+        } else {
+            const errorResponse = await response.json();
+            console.error("Error uploading file:", errorResponse.error);
+            alert(errorResponse.error || "Failed to upload file.");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while uploading the file.");
+    }
+}
+</script>
 
 </body>
 </html>
