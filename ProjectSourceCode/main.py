@@ -44,14 +44,16 @@ def getFile():
             print(data.get_data_types())
             print("HEAD") 
             print(data.get_head())
-            print("GRANULARITY")
-            print(data.get_granularity())
-            print("COL")
-            row = data.row(3)
-            print(row)
-            data.clean(duplicates=True, normalize=True, naEntries=True, convertTime=True, convertDate=True)
+            #@TODO there is an issue here with not all methods being applicable
+
+            # print("GRANULARITY")
+            # print(data.get_granularity())
+            # print("COL")
+            # row = data.row(3)
+            # print(row)
+            # data.clean(duplicates=True, normalize=True, naEntries=True, convertTime=True, convertDate=True)
             
-            print(data.get_granularity())
+            # print(data.get_granularity())
 
             return jsonify({
                 'message': "the file was correctly uploaded"

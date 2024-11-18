@@ -106,7 +106,9 @@
         if (response.ok) {
             const result = await response.json();
             console.log("File uploaded successfully:", result);
-            alert(result.message || "File uploaded successfully!");
+            window.location.href = '/choice';
+            //alert(result.message || "File uploaded successfully!");
+
         } else {
             const errorResponse = await response.json();
             console.error("Error uploading file:", errorResponse.error);
