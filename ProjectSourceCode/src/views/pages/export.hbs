@@ -90,25 +90,24 @@
     }
 
     async function uploadFile(file) {
-        if (!file) {
-            alert("No file selected.");
-            return;
-        }
+    if (!file) {
+        alert("No file selected.");
+        return;
+    }
 
-        const formData = new FormData();
-        formData.append("file", file);
+    const formData = new FormData();
+    formData.append("file", file);
+
     try {
-        const response = await fetch('http://localhost:5001/upload', {
+        const response = await fetch('http://localhost:5000/upload', {
             method: 'POST',
-            body: formData
+            body: formData,
         });
 
         if (response.ok) {
             const result = await response.json();
             console.log("File uploaded successfully:", result);
             window.location.href = '/choice';
-            //alert(result.message || "File uploaded successfully!");
-
         } else {
             const errorResponse = await response.json();
             console.error("Error uploading file:", errorResponse.error);
@@ -119,6 +118,7 @@
         alert("An error occurred while uploading the file.");
     }
 }
+
 </script>
 
 </body>

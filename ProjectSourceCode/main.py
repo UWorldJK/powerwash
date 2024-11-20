@@ -6,8 +6,9 @@ import time
 from flask_cors import CORS
 
 app = Flask(__name__)
-data = None
-CORS(app)
+data=None
+CORS(app, origins=["http://localhost:3000", "http://localhost:3001"])
+
 
 
 def returnHead():
@@ -24,6 +25,7 @@ def get_eda():
 
 @app.route("/upload", methods=["POST"])
 def getFile():
+    global data
     file = request.files["file"]
     #checks
     if file.filename == "":
@@ -39,6 +41,7 @@ def getFile():
 
             # Read CSV
             #df = pd.read_csv(io.StringIO(file_content))
+            global data
             data = clean.Cleaner(io.StringIO(file_content))
             print("TYPES")
             print(data.get_data_types())
@@ -64,5 +67,16 @@ def getFile():
                 'message': "the final was not correctly uploaded, exception e caught"
             }), 400
 
+@app.route('/get-data', methods=["GET"])
+def get_data():
+    global data
+    if data is not None:
+        head_data = data.get_head()  # Convert to list of dictionaries
+        return head_data.to_json(orient='records'), 200
+    else:
+        print("DATA WAS NONE IN GET DATA")
+        return jsonify({"error": "No data available"}), 400
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False)
+
