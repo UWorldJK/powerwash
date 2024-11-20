@@ -144,21 +144,15 @@ app.post('/register', async (req, res) => {
     if (!email || !username || !password || !firstname || !lastname || !country) {
       return res.status(400).json({ message: 'Please fill out all fields' });
     }
-
-    console.log("REGISTERING");
-
-    // Hash the password using bcrypt
-    const hash = await bcrypt.hash(password, 10);
-
-    // Prepare the query to insert user data into the 'users' table
-    const query = 'INSERT INTO users (email, username, password, firstname, lastname, country) VALUES ($1, $2, $3, $4, $5, $6)';
-    const values = [email, username, hash, firstname, lastname, country];
     
-    // Execute the query to insert the user into the database
-    await db.none(query, values); 
+    console.log("REGISTERING")
+    const hash = await bcrypt.hash(password, 10);
+    const query = 'INSERT INTO users (email, username, password) VALUES ($1, $2, $3)';
+    const values = [email, username, hash];
+    await db.oneOrNone(query, values); 
 
-    // Redirect to the home page after successful registration
     res.redirect('/home');
+
   } catch (err) {
     // Handle any errors during the registration process
     console.error(err);
@@ -187,65 +181,29 @@ app.get('/export', (req, res) => {
   res.render('pages/export');
 });
 
-app.post('/upload', upload.single('file'), (req, res) => {
-  if (req.file) {
-      console.log("First line of the file content:");
-      const fs = require('fs');
-      const readline = require('readline');
+// app.get('/choice', (req, res) => {
+//   res.render('pages/choice');
+// });
 
-      const fileStream = fs.createReadStream(req.file.path);
-      const rl = readline.createInterface({
-          input: fileStream,
-          crlfDelay: Infinity
-      });
+// app.post('/upload', upload.single('file'), async (req, res) => {
+//   try {
+//     if (!req.file) {
+//       return res.status(400).json({ success: false, error: 'No file selected.' });
+//     }
 
-      let firstLinePrinted = false; // Flag to track if the first line has been printed
-
-      rl.on('line', (line) => {
-          if (!firstLinePrinted) {
-              console.log(line);
-              firstLinePrinted = true;
-              rl.close(); // Close the stream after the first line is printed
-          }
-      });
-
-      rl.on('close', () => {
-          res.render('pages/choice');
-      });
-  } else {
-      res.status(400).send('No file uploaded.');
-  }
-});
-
-
-
-// Route to handle file upload and print the first line
-app.post('/upload', upload.single('file'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).send('No file uploaded.');
-  }
-
-  const filePath = path.join(__dirname, req.file.path);
-
-  // Read the file and print the first line
-  fs.readFile(filePath, 'utf-8', (err, data) => {
-    if (err) {
-      console.error('Error reading file:', err);
-      return res.status(500).send('Error reading file.');
-    }
-
-    const firstLine = data.split('\n')[0];
-    console.log('First line of the file:', firstLine);
+//     console.log(`File uploaded: ${req.file.originalname}`);
     
-
-    // Cleanup uploaded file
-    fs.unlink(filePath, (unlinkErr) => {
-      if (unlinkErr) console.error('Error deleting file:', unlinkErr);
-    });
-
-    
-  });
-});
+//     // Send a JSON response indicating success
+//     res.json({
+//       success: true,
+//       message: 'File uploaded successfully!',
+//       fileName: req.file.originalname,
+//     });
+//   } catch (error) {
+//     console.error('Error uploading file:', error);
+//     res.status(500).json({ success: false, error: 'An error occurred while uploading the file.' });
+//   }
+// });
 
 app.get('/profile', (req, res) => {
   res.render('pages/profile');
