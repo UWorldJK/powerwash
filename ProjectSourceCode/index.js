@@ -181,6 +181,10 @@ app.get('/export', (req, res) => {
   res.render('pages/export');
 });
 
+app.get('/result', (req, res) => {
+  res.render('pages/result');
+});
+
 // app.get('/choice', (req, res) => {
 //   res.render('pages/choice');
 // });
