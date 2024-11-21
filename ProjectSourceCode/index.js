@@ -141,7 +141,7 @@ app.post('/register', async (req, res) => {
     const { email, username, password, firstname, lastname, country } = req.body;
 
     // Validate that all required fields are provided
-    if (!email || !username || !password || !firstname || !lastname || !country) {
+    if (!email || !username || !password ) {
       return res.status(400).json({ message: 'Please fill out all fields' });
     }
     
