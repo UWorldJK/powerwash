@@ -3,7 +3,11 @@ import io
 import pandas as pd
 import cleaner as clean
 import time
+from time import sleep
 from flask_cors import CORS
+import json
+import pickle
+
 
 app = Flask(__name__)
 data=None
@@ -43,6 +47,8 @@ def getFile():
             #df = pd.read_csv(io.StringIO(file_content))
             global data
             data = clean.Cleaner(io.StringIO(file_content))
+            with open("temp_data/data.pkl", "wb") as f:
+                pickle.dump(data, f)
             print("TYPES")
             print(data.get_data_types())
             print("HEAD") 
@@ -69,13 +75,41 @@ def getFile():
 
 @app.route('/get-data', methods=["GET"])
 def get_data():
-    global data
+    with open("temp_data/data.pkl", "rb") as f:
+        data = pickle.load(f)
     if data is not None:
         head_data = data.get_head()  # Convert to list of dictionaries
         return head_data.to_json(orient='records'), 200
     else:
         print("DATA WAS NONE IN GET DATA")
         return jsonify({"error": "No data available"}), 400
+    
+@app.route('/get-vars', methods=["GET"])
+def get_varNames():
+    with open("temp_data/data.pkl", "rb") as f:
+        data = pickle.load(f)
+    if data is not None:
+        col_data = data.get_columns().tolist()  # Convert to list of dictionaries
+        print(col_data)
+        return jsonify(json.dumps(col_data)), 200
+    else:
+        print("DATA WAS NONE IN GET VARS")
+        return jsonify({"error": "No cols available"}), 400
+    
+
+@app.route('/submit-choices', methods=['POST'])
+def submit_choices():
+    choices = request.json
+    if not choices:
+        return jsonify({'error': 'No data choices'}), 400
+
+    # Process the chip states (e.g., save to database or perform actions)
+    print("Received chip states:", choices)
+    if(choices["graphing"] == True):
+        return jsonify({'message': 'Choices received, redirect to graph selection'}), 201
+    
+    return jsonify({'message': 'Choices received successfully!'}), 200
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False)

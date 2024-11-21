@@ -217,6 +217,14 @@ app.get('/choice', (req, res) => {
   res.render('pages/choice');
 });
 
+app.get('/graphSelection', (req, res) => {
+  res.render('pages/graphSelection');
+});
+
+app.get('/test', (req, res) => {
+  res.render('pages/test');
+});
+
 //--------------------------------------------------------------\\
 //----------------------Starting Server--------- ----------------\\
 
