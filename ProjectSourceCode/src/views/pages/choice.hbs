@@ -1,26 +1,26 @@
 <body>
     <header class="section text-center text-black">
         <div class="container text-center">
-            <h1 class="display-3">Looking clean...</h1>
+            <h1 class="display-3" style="color: black;">Looking clean...</h1>
             
             <div class="container" 
                 style="width:80%; 
-                        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
                         height: 300px; 
                         border-radius: 25px; 
                         overflow-y: auto; 
-                        padding: 10px;" 
+                        padding: 10px;
+                        background: #f1f1f1;" 
                 id="data-display">
                 <table id="data-table" style="width:100%; color: #fff; border-collapse: collapse;"></table>
             </div>
 
             <br>
 
-            <h3>What would you like to do with your data?</h3>
+            <h3 style="color: black; padding: 15px;">What would you like to do with your data?</h3>
         </div>
 
     <!-- Container for chips checklist -->
-    <div id="chipGrid" class="chips-container">
+    <div id="chipGrid" class="chips-container" style="background-color: #f1f1f1;">
         <!-- Chips will be dynamically added here -->
     </div>
 
@@ -56,6 +56,7 @@
                 th.style.borderBottom = '1px solid #fff'; // Optional styling
                 th.style.padding = '8px'; // Optional spacing
                 th.style.textAlign = 'left';
+                th.style.color = 'black';
                 headerRow.appendChild(th);
             });
             table.appendChild(headerRow);
@@ -66,6 +67,7 @@
                 headers.forEach(header => {
                     const td = document.createElement('td');
                     td.textContent = row[header];
+                    td.style.color = 'black';
                     td.style.padding = '8px'; // Optional spacing
                     rowElement.appendChild(td);
                 });

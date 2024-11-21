@@ -185,9 +185,10 @@ app.get('/result', (req, res) => {
   res.render('pages/result');
 });
 
-// app.get('/choice', (req, res) => {
-//   res.render('pages/choice');
-// });
+
+app.get('/profile', (req, res) => {
+  res.render('pages/profile');
+});
 
 app.get('/choice', (req, res) => {
   res.render('pages/choice');
