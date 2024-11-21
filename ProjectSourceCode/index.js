@@ -185,29 +185,6 @@ app.get('/result', (req, res) => {
   res.render('pages/result');
 });
 
-// app.get('/choice', (req, res) => {
-//   res.render('pages/choice');
-// });
-
-// app.post('/upload', upload.single('file'), async (req, res) => {
-//   try {
-//     if (!req.file) {
-//       return res.status(400).json({ success: false, error: 'No file selected.' });
-//     }
-
-//     console.log(`File uploaded: ${req.file.originalname}`);
-    
-//     // Send a JSON response indicating success
-//     res.json({
-//       success: true,
-//       message: 'File uploaded successfully!',
-//       fileName: req.file.originalname,
-//     });
-//   } catch (error) {
-//     console.error('Error uploading file:', error);
-//     res.status(500).json({ success: false, error: 'An error occurred while uploading the file.' });
-//   }
-// });
 
 app.get('/profile', (req, res) => {
   res.render('pages/profile');
