@@ -48,7 +48,7 @@
 
   <div class="columns-container" style="text-align:center">
     <button class="btn btn-primary text-center" id="add-row" disabled>Add Graph</button>
-    <button class="btn btn-primary text-center" id="submit">Submit</button>
+    <button class="btn btn-primary text-center"  onclick="postPairs()" id="submit">Submit</button>
   </div>
 
 <script>
@@ -187,25 +187,32 @@
       newRow.classList.add("columns");
       newRow.dataset.row = rowCount;
       newRow.innerHTML = `
-        <div class="dropzone" data-column="column1"></div>
-        <div class="dropzone" data-column="column2"></div>
+        <div class="dropzone" style="justify-content:center;" data-column="column1"></div>
+        <div class="dropzone" style="justify-content:center;" data-column="column2"></div>
       `;
       rowsContainer.appendChild(newRow);
 
       document.getElementById("add-row").disabled = true; // Disable until the new row is filled
     });
 
-    // Submit button
-    document.getElementById("submit").addEventListener("click", () => {
-      const pairs = [];
+  function pairsHelper(){
+    const pairs = [];
       for (const [row, columns] of Object.entries(rows)) {
         if (columns.column1 && columns.column2) {
           pairs.push([columns.column1, columns.column2]);
         }
       }
       console.log("Pairs:", pairs);
-      window.location.href="http://localhost:3000/result";
-    });
+      return pairs;
+      
+  }
+
+  function postPairs(){
+    let pairs = [];
+    pairs = pairsHelper();
+    //POST
+    window.location.href="http://localhost:3000/result";
+  }
 
   </script>
 </body>

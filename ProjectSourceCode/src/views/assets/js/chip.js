@@ -62,7 +62,7 @@ async function submitChipStates() {
         }
 
         if(response.status == 201){
-            window.location.href="http://localhost:3000/test";
+            window.location.href="http://localhost:3000/graphSelection";
         }
 
         const result = await response.json();
