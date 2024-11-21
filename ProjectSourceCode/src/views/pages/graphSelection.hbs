@@ -207,12 +207,36 @@
       
   }
 
-  function postPairs(){
-    let pairs = [];
-    pairs = pairsHelper();
-    //POST
-    window.location.href="http://localhost:3000/result";
-  }
+ function postPairs() {
+    const pairs = pairsHelper(); // Get selected pairs
+    if (pairs.length === 0) {
+        alert("Please select at least one pair to visualize.");
+        return;
+    }
+
+    // POST the data to the server
+    fetch("http://localhost:3000/post-pairs", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pairs }),
+    })
+    .then(response => {
+        if (response.ok) {
+            // Redirect to the result page after successful post
+            window.location.href = "http://localhost:3000/result";
+        } else {
+            console.error("Failed to post pairs:", response.statusText);
+        }
+    })
+    .catch(error => {
+        console.error("Error posting pairs:", error);
+    });
+   window.location.href='/graphSelection';
+
+}
+
 
   </script>
 </body>
