@@ -47,7 +47,7 @@ describe('Testing Add User with all Fields', () => {
     chai
       .request(server)
       .post('/register')
-      .send({email: 'jacobkurry@gmail.com', username: 'jacob', password: '12345', firstname: 'Jacob', lastname: 'Kurry', country: 'US'})
+      .send({email: 'jacobkurry@gmail.com', username: 'jacob', password: '12345'})
       .end((err, res) => {
         expect(res).to.have.status(200);
         done();
