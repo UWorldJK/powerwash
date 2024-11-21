@@ -52,6 +52,10 @@
     const fileInput = document.getElementById('file-input');
     const paperClip = document.getElementById('paper-clip');
 
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     uploadArea.addEventListener('click', () => {
         fileInput.click();
     });
@@ -107,7 +111,7 @@
         if (response.ok) {
             const result = await response.json();
             console.log("File uploaded successfully:", result);
-            window.location.href = '/choice';
+            window.location.href='/choice';
         } else {
             const errorResponse = await response.json();
             console.error("Error uploading file:", errorResponse.error);

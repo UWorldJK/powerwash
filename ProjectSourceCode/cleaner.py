@@ -70,6 +70,9 @@ class Cleaner:
     def get_structure(self):
         return self.df.shape
     
+    def get_columns(self):
+        return self.df.columns
+    
     def get_sample(self, n):
         return self.df.sample(n, frac=1, replace=False)
     
