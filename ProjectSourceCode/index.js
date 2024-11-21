@@ -160,6 +160,19 @@ app.post('/register', async (req, res) => {
   }
 });
 
+app.post("/post-pairs", (req, res) => {
+  pairsData = req.body.pairs; // Save pairs for use on the result page
+  console.log("Received pairs:", pairsData);
+  res.sendStatus(200);
+});
+
+// Endpoint to get the pairs (for rendering on the result page)
+app.get("/get-pairs", (req, res) => {
+  res.json(pairsData);
+});
+
+
+
 
 app.get('/home', (req, res) => {
   res.render('pages/home');
