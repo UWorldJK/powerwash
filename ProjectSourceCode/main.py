@@ -110,6 +110,30 @@ def submit_choices():
     
     return jsonify({'message': 'Choices received successfully!'}), 200
 
+@app.route('/get-pair-data', methods=['POST'])
+def get_pair_data():
+    pair = request.json.get("pair", [])
+    if not pair or len(pair) != 2:
+        return jsonify({"error": "Invalid pair data provided"}), 400
+
+    x_col, y_col = pair
+    with open("temp_data/data.pkl", "rb") as f:
+        data = pickle.load(f)
+
+    if data is not None:
+        try:
+            # Fetch the columns from the data
+            print("x:",x_col)
+            print("y:",y_col)
+            x_data = (data.get_column_data(x_col)).tolist()  # Assuming `get_column` is defined in `Cleaner`
+            y_data = (data.get_column_data(y_col)).tolist()
+            return jsonify({"x": x_data, "y": y_data}), 200
+        except KeyError as e:
+            return jsonify({"error": f"Column not found: {e}"}), 400
+    else:
+        return jsonify({"error": "Data is not loaded"}), 400
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False)

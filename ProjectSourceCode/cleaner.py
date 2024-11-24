@@ -70,6 +70,9 @@ class Cleaner:
     def get_structure(self):
         return self.df.shape
     
+    def get_column_data(self, name):
+        return self.df[name]
+    
     def get_columns(self):
         return self.df.columns
     
