@@ -121,6 +121,39 @@ hr {
   overflow: visible;
 }
 
+.download-container {
+  display: flex;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.download-icon {
+  color: #007bff;
+  font-size: 24px;
+  margin-left: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 2px solid #007bff;
+  border-radius: 50%;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.download-icon:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.file-name {
+  font-size: 18px;
+  color: #333;
+  margin-right:200px;
+}
+
 h1,
 h2,
 h3,
