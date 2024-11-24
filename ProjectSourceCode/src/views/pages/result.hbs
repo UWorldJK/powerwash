@@ -30,7 +30,7 @@
             }
 
             const graphsContainer = document.getElementById("graphs-container");
-            pairs.forEach((pair, index) => {
+            pairs.forEach(async (pair, index) => {
                 const colDiv = document.createElement("div");
                 colDiv.className = "col-md-6";
 
@@ -57,21 +57,60 @@
                 colDiv.appendChild(cardDiv);
                 graphsContainer.appendChild(colDiv);
 
-                // Example Plotly graph using the pair data
-                const trace1 = {
-                    x: pair[0], // Replace with actual data for pair[0]
-                    y: pair[1], // Replace with actual data for pair[1]
-                    mode: "lines+markers",
-                    type: "scatter",
-                    name: `Pair: ${pair[0]} - ${pair[1]}`,
-                };
+                try {
+                    // Fetch data for the pair
+                    const pairResponse = await fetch("http://localhost:5001/get-pair-data", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ pair })
+                    });
 
-                const layout = {
-                    title: `Graph for ${pair[0]} vs ${pair[1]}`,
-                };
+                    if (!pairResponse.ok) {
+                        console.error(`Failed to fetch data for ${pair[0]} and ${pair[1]}:`, pairResponse.statusText);
+                        return;
+                    }
 
-                Plotly.newPlot(graphDiv.id, [trace1], layout);
+                    const pairData = await pairResponse.json();
+
+                    /*// Fetch data for the pair
+                    const pairResponse = await fetch("http://localhost:5001/get-pair-typea", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ pair })
+                    });
+
+                    if (!pairResponse.ok) {
+                        console.error(`Failed to fetch types for ${pair[0]} and ${pair[1]}:`, pairResponse.statusText);
+                        return;
+                    }
+
+                    const pairTypes = await pairResponse.json(); */
+
+                    // Create Plotly graph with the fetched data
+                    const trace1 = {
+                        x: pairData.x,
+                        y: pairData.y,
+                        mode: "lines+markers",
+                        type: "bar",
+                        name: `Pair: ${pair[0]} - ${pair[1]}`,
+                    };
+
+                    const layout = {
+                        title: `Graph for ${pair[0]} vs ${pair[1]}`,
+                        xaxis: {
+                            title: `${pair[0]}`
+                        },
+                        yaxis: {
+                            title: `${pair[1]}`
+                        }
+                    };
+
+                    Plotly.newPlot(graphDiv.id, [trace1], layout);
+                } catch (error) {
+                    console.error("Error fetching data for pair:", error);
+                }
             });
+
         } catch (error) {
             console.error("Error fetching pairs:", error);
         }
