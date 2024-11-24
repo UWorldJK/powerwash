@@ -1,8 +1,12 @@
-<header class="section text-center text-white">
-    <div class="container">
-        <h1 class="display-3" style="color: black;">Data Visualization</h1>
-    </div>
-</header>
+<style>
+
+</style>
+
+<h3 style="color: black;">Download clean data:</h3>
+<div class="download-container" style="justify-content: center;" id="download-container">
+    {{!-- Code for the downlaod thing is in scrippt --}}
+</div>
+
 
 <section id="graphs" class="py-5">
     <div class="container">
@@ -15,6 +19,47 @@
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>
+    // Fetch the file name from the backend
+    // Fetch the file name from the backend
+async function fetchFileName() {
+    try {
+        const response = await fetch('http://localhost:5001/get-filename');
+        if (!response.ok) {
+            console.error("Failed to fetch file name.", response.statusText);
+            return;
+        }
+
+        const fileName = await response.json();
+
+        const downloadContainer = document.getElementById("download-container");
+        downloadContainer.innerHTML = '';
+
+        const downloadLink = document.createElement("a");
+        downloadLink.href = `http://localhost:5001/cleaned_data/${fileName["filename"]}`;
+        downloadLink.download = fileName["filename"];
+        downloadLink.className = "download-icon";
+        downloadLink.title = "Download File";
+
+        const icon = document.createElement("i");
+        icon.className = "fas fa-arrow-down";
+
+        const fileNameSpan = document.createElement("span");
+        fileNameSpan.textContent = fileName["filename"];
+        fileNameSpan.style=
+        
+        downloadContainer.appendChild(fileNameSpan);
+        downloadLink.appendChild(icon);
+        downloadContainer.appendChild(downloadLink);
+        
+    } catch (error) {
+        console.error("Error in fetchFileName:", error);
+    }
+}
+
+
+// Call the function to fetch the file name and update the UI
+fetchFileName();
+
     document.addEventListener("DOMContentLoaded", async () => {
         try {
             const response = await fetch("http://localhost:3000/get-pairs");

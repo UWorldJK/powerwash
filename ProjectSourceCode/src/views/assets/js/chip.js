@@ -3,7 +3,7 @@ const chipStates = {};
 
 // Predefined list of chips
 const predefinedChips = [
-    "graphing","normalization", "standardization", "missing value imputation", "duplicate removal", "scaling", "binning", "encoding", "data type conversion", "feature extraction", "noise reduction", "data augmentation", "anomaly detection", "dimensionality reduction", "text cleaning", "tokenization", "stemming", "lemmatization", "data smoothing", "aggregation", "data transformation", "categorical conversion", "time series decomposition", "data discretization", "feature selection"
+    "graphing","normalization", "granularity", "standardization", "missing value removal", "missing value imputation", "duplicate removal", "standardize time format", "standardize date format","scaling", "binning", "encoding", "data type conversion", "feature extraction", "noise reduction", "data augmentation", "anomaly detection", "dimensionality reduction", "text cleaning", "tokenization", "stemming", "lemmatization", "data smoothing", "aggregation", "data transformation", "categorical conversion", "time series decomposition", "data discretization", "feature selection"
 ];
 
 // Function to create a new chip

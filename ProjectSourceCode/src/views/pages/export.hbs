@@ -123,6 +123,31 @@
     }
 }
 
+    async function deleteOldData(){
+        try {
+        const response = await fetch('http://localhost:5001/delete-clean-folder', {
+            method: 'POST'
+        });
+
+        if (response.ok) {
+            console.log(1);
+            const result = await response.json();
+
+        } else {
+            console.log(2);
+            const errorResponse = await response.json();
+            console.error("Error deleteing old files:", errorResponse.error);
+
+        }
+    } catch (error) {
+        console.log(3);
+        console.error("Error:", error);
+        alert("An error occurred while deletes the old files.");
+    }
+    }
+
+deleteOldData();
+
 </script>
 
 </body>
