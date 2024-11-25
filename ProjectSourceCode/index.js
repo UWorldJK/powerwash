@@ -165,6 +165,58 @@ app.get('/home', (req, res) => {
   res.render('pages/home');
 });
 
+app.get('/forgot', (req, res) =>{
+  res.render('pages/forgot');
+});
+
+app.post('/forgot', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    // Find the user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    // Generate a reset token
+    const token = crypto.randomBytes(20).toString('hex');
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+    // Set the token and expiration time in the database
+    user.resetPasswordToken = hashedToken;
+    user.resetPasswordExpires = Date.now() + 3600000; // Token valid for 1 hour
+    await user.save();
+
+    // Configure Nodemailer
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: process.env.EMAIL, // Your email
+        pass: process.env.EMAIL_PASSWORD, // Your email password
+      },
+    });
+
+    // Send the email
+    const resetLink = `http://localhost:3000/reset/${token}`;
+    const mailOptions = {
+      to: user.email,
+      from: process.env.EMAIL,
+      subject: 'Password Reset',
+      text: `You are receiving this email because you requested a password reset.\n\n
+        Please click the link below to reset your password:\n\n
+        ${resetLink}\n\n
+        If you did not request this, please ignore this email.\n`,
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).send('Password reset email sent');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error sending email');
+  }
+});
+
 app.get('/logout', (req, res) => {
   res.render('pages/logout');
 });
@@ -197,6 +249,7 @@ app.get('/choice', (req, res) => {
 app.get('/graphSelection', (req, res) => {
   res.render('pages/graphSelection');
 });
+
 
 app.get('/test', (req, res) => {
   res.render('pages/test');
