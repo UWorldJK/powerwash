@@ -115,6 +115,34 @@ body {
   outline: 0 !important;
 }
 
+.upload-area {
+  width: 100%;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s;
+}
+.upload-area.dragover {
+  background-color: #444;
+}
+.upload-area input[type="file"] {
+  display: none;
+}
+.paper-clip-icon {
+  font-size: 24px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
 hr {
   box-sizing: content-box;
   height: 0;
@@ -125,6 +153,8 @@ hr {
   display: flex;
   align-items: center;
   font-family: Arial, sans-serif;
+  margin-left: 3%;
+  margin-right: 3%;
   margin: 20px;
 }
 

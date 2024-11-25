@@ -160,8 +160,12 @@ app.post('/register', async (req, res) => {
   }
 });
 
+let pairsData=[];
+
 app.post("/post-pairs", (req, res) => {
   pairsData = req.body.pairs; // Save pairs for use on the result page
+  console.log(pairsData)
+  
   console.log("Received pairs:", pairsData);
   res.sendStatus(200);
 });
