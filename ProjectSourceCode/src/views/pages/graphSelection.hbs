@@ -1,20 +1,52 @@
 <head>
   <style>
+    .chips-container {
+        display: flex;
+        align-items: center; /* Center items vertically */
+        justify-content: flex-start; /* Align items horizontally */
+        gap: 0px; /* Add spacing between title and pile-items */
+        margin-top: 10px; /* Adjust margin for spacing */
+        textAlign: left;
+    }
+
+    #pile-items {
+        display: flex;
+        gap: 10px; /* Add spacing between items */
+        flex-wrap: wrap; /* Allow wrapping if there are too many items */
+    }
+
+    .chip {
+      background-color: #007BFF;
+      color: black;
+      padding: 8px 15px; /* Padding for consistent size */
+      border-radius: 20px; /* Round chip edges */
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15); /* Optional shadow for depth */
+      font-size: 14px; /* Adjust font size */
+      text-align: center; /* Center the text inside each chip */
+      display: inline-block; /* Ensure chips behave like blocks */
+    }
 
     .columns {
       display: flex;
       justify-content: center;
-      margin-top: 10px;
-      gap: 20px;
+      gap: 10px; /* Space between X and Y-axis containers */
+      margin-top: 20px;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column; /* Stack label and dropzone vertically */
+      align-items: center;    /* Center align label and dropzone */
+      gap: 0px;              /* Space between label and dropzone */
     }
 
     .dropzone {
       border: 1px dashed #ccc;
-      padding-top: 1%;
-      width: 35%;
+      width: 200px;           /* Fixed width for dropzone */
       height: 70px;
       display: flex;
-      text-align:center;
+      justify-content: center;
+      align-items: center;    /* Center content within dropzone */
     }
 
     .item {
@@ -29,7 +61,7 @@
   </style>
 </head>
 <body>
-    <h3 style="text-align:center; padding-top:10px;">Variables</h3>
+    <h3 style="text-align:center; padding-top:25px;color:black">Variables</h3>
   <div class="chips-container">
     <br>
     <div id="pile-items"></div> <!-- Pile items will be dynamically populated here -->
@@ -37,10 +69,17 @@
 
   <div id="rows">
     <div class="columns" data-row="1">
-      <h3>X-Axis</h3>
-      <div class="dropzone " style="justify-content:center; center; border: 1px dashed #ccc;" data-column="column1"></div>
-      <div class="dropzone" style="justify-content:center; border: 1px dashed #ccc;" data-column="column2"></div>
-      <h3>Y-Axis</h3>
+      <!-- X-Axis Column -->
+      <div class="column">
+        <h3 style="color: black;">X-Axis</h3>
+        <div class="dropzone" data-column="column1"></div>
+      </div>
+
+    
+      <div class="column">
+        <h3 style="color: black; padding-bottom: 0px">Y-Axis</h3>
+        <div class="dropzone" data-column="column2"></div>
+      </div>
     </div>
   </div>
 
