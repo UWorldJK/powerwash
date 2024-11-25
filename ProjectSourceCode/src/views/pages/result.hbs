@@ -1,27 +1,29 @@
-<style>
-
-</style>
-
-<h3 style="color: black;">Download clean data:</h3>
-<div class="download-container" style="justify-content: center;" id="download-container">
-    {{!-- Code for the downlaod thing is in scrippt --}}
-</div>
-
-
-<section id="graphs" class="py-5">
-    <div class="container">
-        <h2 class="text-center" style="color: black;">Graphs</h2>
-        <div id="graphs-container" class="row mt-4">
-            <!-- Dynamic graphs will be inserted here -->
-        </div>
+{{!-- EVERYTHING ON THIS PAGE ONLY SHOWS IF PREVIOUSLY SELECTED EXCEPT DOWNLOAD --}}
+<body>
+    <h3 style="color: black; text-align:center">Download clean data:</h3>
+    <div class="download-container" style="justify-content: center;" id="download-container">
+        {{!-- Code for the downlaod thing is in scrippt --}}
     </div>
-</section>
+
+    <h3 style="color: black; text-align:center" id="granularity-title"></h3>
+
+    <div class="container" style="text-align: center;" id="granularity-container">
+
+    </div>
+
+    <section id="graphs" class="py-5">
+            <h3 class="text-center" style="color: black;" id="graphs-title"></h3>
+            <div id="graphs-container" class="row mt-4">
+                <!-- Dynamic graphs will be inserted here -->
+            </div>
+    </section>
+</body>
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>
-    // Fetch the file name from the backend
-    // Fetch the file name from the backend
-async function fetchFileName() {
+
+// Fetch the file name from the backend
+    async function fetchFileName() {
     try {
         const response = await fetch('http://localhost:5001/get-filename');
         if (!response.ok) {
@@ -56,15 +58,46 @@ async function fetchFileName() {
     }
 }
 
+//Fetch the granularity of the data from the backend
+    async function fetchGranularity(){
+        try {
+            const response = await fetch('http://localhost:5001/get-granularity');
+            if (!response.ok) {
+                console.error("Failed to fetch file name.", response.statusText);
+                return;
+            }
 
-// Call the function to fetch the file name and update the UI
-fetchFileName();
+            if(response.status == 201){ //if didnt ask for granularity
+                return;
+            }
+            else{ // if asked for, render
+                
+                const pKey = await response.json();
 
+                const granTitle = document.getElementById("granularity-title")
+                granTitle.innerHTML = '';
+                granTitle.innerText = "Granularity"
+
+                const granularityContainer = document.getElementById("granularity-container");
+                granularityContainer.innerHTML = '';
+
+                const txt = document.createElement("h4")
+                txt.textContent = `The primary key(s) of your data is: "${pKey["pKey"]}"`;
+                txt.style= "color: black; margin-right:10px;"
+        
+                granularityContainer.appendChild(txt);
+            }
+            
+        } catch (error) {
+            console.error("Error in fetchFileName:", error);
+        }
+    }
+
+//create the graphs by fetching pandas DF info and plotting on front end with plotly
     document.addEventListener("DOMContentLoaded", async () => {
         try {
             const response = await fetch("http://localhost:3000/get-pairs");
             if (!response.ok) {
-                console.error("Failed to fetch pairs:", response.statusText);
                 return;
             }
 
@@ -73,6 +106,10 @@ fetchFileName();
                 console.log("No pairs to display.");
                 return;
             }
+
+            const graphTitle = document.getElementById("graphs-title")
+            graphTitle.innerHTML = '';
+            graphTitle.innerText = "Graphs"
 
             const graphsContainer = document.getElementById("graphs-container");
             pairs.forEach(async (pair, index) => {
@@ -117,20 +154,6 @@ fetchFileName();
 
                     const pairData = await pairResponse.json();
 
-                    /*// Fetch data for the pair
-                    const pairResponse = await fetch("http://localhost:5001/get-pair-typea", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ pair })
-                    });
-
-                    if (!pairResponse.ok) {
-                        console.error(`Failed to fetch types for ${pair[0]} and ${pair[1]}:`, pairResponse.statusText);
-                        return;
-                    }
-
-                    const pairTypes = await pairResponse.json(); */
-
                     // Create Plotly graph with the fetched data
                     const trace1 = {
                         x: pairData.x,
@@ -160,4 +183,7 @@ fetchFileName();
             console.error("Error fetching pairs:", error);
         }
     });
+
+fetchGranularity();
+fetchFileName();
 </script>

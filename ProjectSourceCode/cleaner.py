@@ -84,6 +84,21 @@ class Cleaner:
                     return subset_as_list
 
         return primary_keys if primary_keys else None
+    
+    # For KNN
+    def identify_target_column(dataframe):
+        # Identify potential categorical columns
+        categorical_cols = [col for col in dataframe.columns 
+                            if dataframe[col].nunique() <= 10 and dataframe[col].dtype == 'object']
+        
+        # Exclude columns with unique values (e.g., IDs)
+        potential_targets = [col for col in categorical_cols if dataframe[col].nunique() < len(dataframe)]
+        
+        # Return the first potential target column or raise a warning
+        if potential_targets:
+            return potential_targets
+        else:
+            return "No suitable target column found."
         
     
     def clean(self, features):

@@ -1,4 +1,5 @@
 <body>
+    {{!-- Table for data --}}
     <header class="section text-center text-black">
         <div class="container text-center">
             <h1 class="display-3" style="color: black;">Looking clean...</h1>
@@ -19,20 +20,17 @@
             <h3 style="color: black; padding: 15px;">What would you like to do with your data?</h3>
         </div>
 
-    <!-- Container for chips checklist -->
     <div id="chipGrid" class="chips-container" style="background-color: #f1f1f1;">
         <!-- Chips will be dynamically added here -->
     </div>
 
-
-        <button class="btn btn-primary text-center" onclick="submitChipStates()">Power Wash!</button>
-
-
-
+    {{!-- Submit all chip states to the backend --}}
+    <button class="btn btn-primary text-center" onclick="submitChipStates()">Power Wash!</button>
 </body>
 
 
 <script>
+    /* Calls to back end to fetch the head of the pandas DF, and then puts into an html table for easy viewing*/
     async function fetchAndDisplayData() {
     try {
         const response = await fetch('http://localhost:5001/get-data', {
@@ -81,5 +79,32 @@
     }
 }
 
-    fetchAndDisplayData();
+    /*On the back end, the clean data is stored in a folder "clean_data", that is created every time 
+    the submit chip states function is called. When changing what has been done to the data, 
+    the folder is deleted, only leaving the original clean data*/
+    async function deleteOldData(){
+        try {
+        const response = await fetch('http://localhost:5001/delete-clean-folder', {
+            method: 'POST'
+        });
+
+        if (response.ok) {
+            console.log(1);
+            const result = await response.json();
+
+        } else {
+            console.log(2);
+            const errorResponse = await response.json();
+            console.error("Error deleteing old files:", errorResponse.error);
+
+        }
+    } catch (error) {
+        console.log(3);
+        console.error("Error:", error);
+        alert("An error occurred while deletes the old files.");
+    }
+    }
+
+fetchAndDisplayData();
+deleteOldData();
 </script>

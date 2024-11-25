@@ -18,6 +18,8 @@ CORS(app, origins=["http://localhost:3000", "http://localhost:3001"])
 data=None
 granularity = None
 fileName = None
+choice = None
+classify = None
 
 # keep in the same order as chips js
 features = {
@@ -26,7 +28,7 @@ features = {
     "granularity": False,
     "standardization": False,
     "missing value removal": False,
-    "missing value imputation": False,
+    "classification": False,
     "duplicate removal": False,
     "standardize time format": False,
     "standardize date format": False,
@@ -131,7 +133,8 @@ def get_varNames():
 @app.route('/submit-choices', methods=['POST'])
 def submit_choices():
     global features
-    global granularity    
+    global classify
+    global granularity
     with open("temp_data/data.pkl", "rb") as f: #read from pkl file
         data = pickle.load(f)
     with open("temp_data/fileName.pkl", "rb") as f: #read from pkl file
@@ -142,19 +145,23 @@ def submit_choices():
         return jsonify({'error': 'No data choices'}), 400
     
     for choice in choices:
-        print(choice)
-        if choices[choice] == True:
+        if (choices[choice] == True):
             features[choice] = True
     
     #always run with bools
     data.clean(features)
     
     #store in granularity var 
-    if(features["granularity"] == True):
+    if(choices["granularity"] == True):
         granularity = data.get_granularity()
-    
-    # if(features["shape"] == True):
-    #     shape = data.get_granularity(
+    else:
+        granularity=None
+        
+    if(choices["classification"] == True):
+        classify = True
+    else:
+        classify=None
+
  
     cleanName = "clean_" + fileName
     fileName = cleanName
@@ -168,11 +175,11 @@ def submit_choices():
     with open("temp_data/fileName.pkl", "wb") as f: #write to pkl file
                 pickle.dump(fileName, f)
                 
-    print(features["graphing"])
     print("Received chip states:", choices)
-    if(features["graphing"] == True):
+    if(choices["graphing"] == True):
         return jsonify({'message': 'Choices received, redirect to graph selection'}), 201
-    
+    elif(choices["classification"] == True):
+        return jsonify({'message': 'Choices received, redirect to classification selection'}), 202
     return jsonify({'message': 'Choices received successfully!'}), 200
 
 @app.route('/get-pair-data', methods=['POST'])
@@ -203,7 +210,15 @@ def get_pair_data():
 def get_filename():
     with open("temp_data/fileName.pkl", "rb") as f: #read from pkl file
         fileName = pickle.load(f)
-    return jsonify({'filename': fileName})
+    return jsonify({'filename': fileName}), 200
+
+@app.route('/get-granularity', methods=['GET'])
+def get_granularity():
+    global granularity
+    if granularity is not None:
+        return jsonify({'pKey': granularity}), 200
+    else:
+        return jsonify({'pKey': granularity}), 201
 
 @app.route('/delete-clean-folder', methods=['POST'])
 def delete_cleanData_folder():
@@ -212,6 +227,14 @@ def delete_cleanData_folder():
         shutil.rmtree('cleaned_data/')  
     return jsonify({'removed':removedFile}), 200
 
+@app.route('/get-classify', methods=['GET'])
+def get_classify():
+    global classify
+    if classify is not None:
+        return jsonify({'classify':True}), 200
+    else:
+        return jsonify({'classify':False}), 201
+    
 # Endpoint to serve the file
 @app.route('/cleaned_data/<path:filename>', methods=['GET'])
 def download_file(filename):

@@ -29,7 +29,7 @@
   </style>
 </head>
 <body>
-    <h3 style="text-align:center; padding-top:10px;">Variables</h3>
+    <h3 style="text-align:center; padding-top:10px; color:black">Variables</h3>
   <div class="chips-container">
     <br>
     <div id="pile-items"></div> <!-- Pile items will be dynamically populated here -->
@@ -37,10 +37,10 @@
 
   <div id="rows">
     <div class="columns" data-row="1">
-      <h3>X-Axis</h3>
-      <div class="dropzone " style="justify-content:center; center; border: 1px dashed #ccc;" data-column="column1"></div>
-      <div class="dropzone" style="justify-content:center; border: 1px dashed #ccc;" data-column="column2"></div>
-      <h3>Y-Axis</h3>
+      <h3 style="color:black">X-Axis</h3>
+      <div class="dropzone " style="justify-content:center; center; border: 1px dashed #282828; border-radius: 10px;" data-column="column1"></div>
+      <div class="dropzone" style="justify-content:center; border: 1px dashed #282828; border-radius: 10px;" data-column="column2"></div>
+      <h3 style="color:black">Y-Axis</h3>
     </div>
   </div>
 
@@ -48,7 +48,7 @@
 
   <div class="columns-container" style="text-align:center">
     <button class="btn btn-primary text-center" id="add-row" disabled>Add Graph</button>
-    <button class="btn btn-primary text-center"  onclick="postPairs()" id="submit">Submit</button>
+    <button class="btn btn-primary text-center"  onclick="postPairs();" id="submit">Submit</button>
   </div>
 
 <script>
@@ -99,6 +99,7 @@
             pileItem.className = "chip"; // Assign chip class
             pileItem.draggable = true;
             pileItem.textContent = item; // Set chip text
+            pileItem.style = "margin-top:5px; margin-bottom-5px;"
             pileContainer.appendChild(pileItem);
         });
     }
@@ -224,18 +225,30 @@
     })
     .then(response => {
         if (response.ok) {
-            // Redirect to the result page after successful post
-            window.location.href = "http://localhost:3000/result";
+            // Chain the second fetch call
+            return fetch('http://localhost:5001/get-classify');
         } else {
-            console.error("Failed to post pairs:", response.statusText);
+            throw new Error(`Failed to post pairs: ${response.statusText}`);
+        }
+    })
+    .then(response => {
+        if (response.ok && response.status === 200) {
+            // Redirect if the second fetch is successful
+            window.location.href = "http://localhost:3000/classifyColumn";
+        } else if (response.status === 201){
+            window.location.href = "http://localhost:3000/result";
+        }
+        else{
+          throw new Error(`Failed to get classify: ${response.statusText}`);
         }
     })
     .catch(error => {
-        console.error("Error posting pairs:", error);
+        console.error("Error:", error);
     });
-   window.location.href='/graphSelection';
-
 }
+
+
+
 
 
   </script>
