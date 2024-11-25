@@ -7,21 +7,9 @@ from matplotlib import pyplot  as plt
 class Cleaner:
     def __init__(self, data):
         self.df = pd.read_csv(data)
-        print('called')
         
-        # #clean must return a Pandas DF
-        # self.dfClean = self.clean(self.df)
-        
-        # rows, cols = self.dfClean.shape
-        
-        # #imagining a screen of feedback after cleaning on front end, between insert and choices pages
-        # print("Your clean data has",rows,"entries, and", cols, "parameters")
-        # print("First few entries of your clean data...") #want this to be a dropdown on front end
-        # print(self.dfClean.head())
-        # return self.dfClean
-    
-    #to remove duplicate entries
-    #sounds good, because the data set is global we can jus do it like this
+    def get_df(self):
+        return self.df
 
     #return the head of the data (5 lines)
     def get_head(self):
@@ -70,6 +58,9 @@ class Cleaner:
     def get_structure(self):
         return self.df.shape
     
+    def get_column_data(self, name):
+        return self.df[name]
+    
     def get_columns(self):
         return self.df.columns
     
@@ -95,16 +86,16 @@ class Cleaner:
         return primary_keys if primary_keys else None
         
     
-    def clean(self, duplicates=False, naEntries=False, convertTime=False, convertDate=False, normalize=False):
-        if(duplicates):
+    def clean(self, features):
+        if(features["duplicate removal"] == True):
             self.remove_duplicates()
-        if(naEntries):
+        if(features["missing value removal"] == True):
             self.remove_na()
-        if(convertTime):
+        if(features["standardize time format"] == True):
             self.convert_time()
-        if(convertDate):
+        if(features["standardize date format"] == True):
             self.convert_date()
-        if(normalize):
+        if(features["normalization"] == True):
             self.normalize_data()
         return self.df
         

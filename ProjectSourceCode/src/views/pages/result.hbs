@@ -1,47 +1,163 @@
-<header class="section text-center text-white">
-    <div class="container">
-      <h1 class="display-3" style="color: black;">Data Visualization</h1>
-    </div>
-</header>
+<style>
+
+</style>
+
+<h3 style="color: black;">Download clean data:</h3>
+<div class="download-container" style="justify-content: center;" id="download-container">
+    {{!-- Code for the downlaod thing is in scrippt --}}
+</div>
+
 
 <section id="graphs" class="py-5">
     <div class="container">
-      <h2 class="text-center" style="color: black;">Graphs</h2>
-      <div class="row mt-4">
-        <div class="col-md-6">
-          <div class="card shadow">
-            <div class="card-body text-center" style="background-color: #f1f1f1;">
-              <h5 class="card-title" style="color: black;">Chart Name</h5>
-              <img src="https://via.placeholder.com/400x300" class="img-fluid rounded">
-            </div>
-          </div>
+        <h2 class="text-center" style="color: black;">Graphs</h2>
+        <div id="graphs-container" class="row mt-4">
+            <!-- Dynamic graphs will be inserted here -->
         </div>
-        <div class="col-md-6">
-          <div class="card shadow">
-            <div class="card-body text-center" style="background-color: #f1f1f1;">
-              <h5 class="card-title" style="color: black;">Chart Name</h5>
-              <img src="https://via.placeholder.com/400x300" class="img-fluid rounded">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-4">
-        <div class="col-md-6">
-          <div class="card shadow">
-            <div class="card-body text-center" style="background-color: #f1f1f1;">
-              <h5 class="card-title" style="color: black;">Chart Name</h5>
-              <img src="https://via.placeholder.com/400x300" class="img-fluid rounded">
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card shadow">
-            <div class="card-body text-center" style="background-color: #f1f1f1;">
-              <h5 class="card-title" style="color: black;">Chart Name</h5>
-              <img src="https://via.placeholder.com/400x300" class="img-fluid rounded">
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 </section>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    // Fetch the file name from the backend
+    // Fetch the file name from the backend
+async function fetchFileName() {
+    try {
+        const response = await fetch('http://localhost:5001/get-filename');
+        if (!response.ok) {
+            console.error("Failed to fetch file name.", response.statusText);
+            return;
+        }
+
+        const fileName = await response.json();
+
+        const downloadContainer = document.getElementById("download-container");
+        downloadContainer.innerHTML = '';
+
+        const downloadLink = document.createElement("a");
+        downloadLink.href = `http://localhost:5001/cleaned_data/${fileName["filename"]}`;
+        downloadLink.download = fileName["filename"];
+        downloadLink.className = "download-icon";
+        downloadLink.title = "Download File";
+
+        const icon = document.createElement("i");
+        icon.className = "fas fa-arrow-down";
+
+        const fileNameSpan = document.createElement("span");
+        fileNameSpan.textContent = fileName["filename"];
+        fileNameSpan.style=
+        
+        downloadContainer.appendChild(fileNameSpan);
+        downloadLink.appendChild(icon);
+        downloadContainer.appendChild(downloadLink);
+        
+    } catch (error) {
+        console.error("Error in fetchFileName:", error);
+    }
+}
+
+
+// Call the function to fetch the file name and update the UI
+fetchFileName();
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        try {
+            const response = await fetch("http://localhost:3000/get-pairs");
+            if (!response.ok) {
+                console.error("Failed to fetch pairs:", response.statusText);
+                return;
+            }
+
+            const pairs = await response.json();
+            if (pairs.length === 0) {
+                console.log("No pairs to display.");
+                return;
+            }
+
+            const graphsContainer = document.getElementById("graphs-container");
+            pairs.forEach(async (pair, index) => {
+                const colDiv = document.createElement("div");
+                colDiv.className = "col-md-6";
+
+                const cardDiv = document.createElement("div");
+                cardDiv.className = "card shadow";
+
+                const cardBody = document.createElement("div");
+                cardBody.className = "card-body text-center";
+                cardBody.style.backgroundColor = "#f1f1f1";
+
+                const title = document.createElement("h5");
+                title.className = "card-title";
+                title.style.color = "black";
+                title.textContent = `Graph: ${pair[0]} vs ${pair[1]}`;
+
+                const graphDiv = document.createElement("div");
+                graphDiv.id = `graph-${index}`;
+                graphDiv.style.height = "400px";
+                graphDiv.style.width = "100%";
+
+                cardBody.appendChild(title);
+                cardBody.appendChild(graphDiv);
+                cardDiv.appendChild(cardBody);
+                colDiv.appendChild(cardDiv);
+                graphsContainer.appendChild(colDiv);
+
+                try {
+                    // Fetch data for the pair
+                    const pairResponse = await fetch("http://localhost:5001/get-pair-data", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ pair })
+                    });
+
+                    if (!pairResponse.ok) {
+                        console.error(`Failed to fetch data for ${pair[0]} and ${pair[1]}:`, pairResponse.statusText);
+                        return;
+                    }
+
+                    const pairData = await pairResponse.json();
+
+                    /*// Fetch data for the pair
+                    const pairResponse = await fetch("http://localhost:5001/get-pair-typea", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ pair })
+                    });
+
+                    if (!pairResponse.ok) {
+                        console.error(`Failed to fetch types for ${pair[0]} and ${pair[1]}:`, pairResponse.statusText);
+                        return;
+                    }
+
+                    const pairTypes = await pairResponse.json(); */
+
+                    // Create Plotly graph with the fetched data
+                    const trace1 = {
+                        x: pairData.x,
+                        y: pairData.y,
+                        mode: "lines+markers",
+                        type: "bar",
+                        name: `Pair: ${pair[0]} - ${pair[1]}`,
+                    };
+
+                    const layout = {
+                        title: `Graph for ${pair[0]} vs ${pair[1]}`,
+                        xaxis: {
+                            title: `${pair[0]}`
+                        },
+                        yaxis: {
+                            title: `${pair[1]}`
+                        }
+                    };
+
+                    Plotly.newPlot(graphDiv.id, [trace1], layout);
+                } catch (error) {
+                    console.error("Error fetching data for pair:", error);
+                }
+            });
+
+        } catch (error) {
+            console.error("Error fetching pairs:", error);
+        }
+    });
+</script>
