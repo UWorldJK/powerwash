@@ -59,20 +59,16 @@ async function submitChipStates() {
         }
 
         if(response.status == 201){
+            console.log("hello")
             window.location.href="http://localhost:3000/graphSelection";
         }
-        else if(response.status == 202){
-            window.location.href="http://localhost:3000/classifyColumns";
-        }
-        else if(response.status == 200){
+        else{
             window.location.href="http://localhost:3000/result";
         }
 
         const result = await response.json();
         console.log("Backend response:", result);
-        // window.location.href="http://localhost:3000/result";
     } catch (error) {
         console.error("Error submitting choices:", error);
     }
 }
-

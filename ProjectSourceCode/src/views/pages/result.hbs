@@ -7,16 +7,18 @@
 
     <h3 style="color: black; text-align:center" id="granularity-title"></h3>
 
-    <div class="container" style="text-align: center;" id="granularity-container">
+    <div class="container" style="text-align: center;" id="granularity-container"></div>
 
-    </div>
-
-    <section id="graphs" class="py-5">
+    <div id="graphs" class="py-5">
             <h3 class="text-center" style="color: black;" id="graphs-title"></h3>
             <div id="graphs-container" class="row mt-4">
                 <!-- Dynamic graphs will be inserted here -->
             </div>
-    </section>
+    </div>
+
+    <h3 class="text-center" style="color: black;" id="knn-title"></h3>
+    <div class="container" id="classification-container" style="width: 100%; height: 400px;"></div>
+
 </body>
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -93,11 +95,107 @@
         }
     }
 
+    function kNNPlotHelper(data) {
+
+        const knnTitle = document.getElementById("knn-title")
+                knnTitle.innerHTML = '';
+                knnTitle.innerText = "K-Nearest Neighbors Classification"
+        const graphsContainer = document.getElementById("classification-container");
+        graphsContainer.innerHTML = ''; 
+
+        const colDiv = document.createElement("div");
+        colDiv.className = "col-md-12 d-flex justify-content-center";
+
+        const cardDiv = document.createElement("div");
+        cardDiv.className = "card shadow";
+        cardDiv.style.width = "80%";
+
+        const cardBody = document.createElement("div");
+        cardBody.className = "card-body text-center";
+        cardBody.style.backgroundColor = "#f1f1f1";
+
+        const title = document.createElement("h5");
+        title.className = "card-title";
+        title.style.color = "black";
+        title.textContent = "KNN Classification Results";
+
+        const graphDiv = document.createElement("div");
+        graphDiv.id = `graph-knn`;
+        graphDiv.style.height = "400px";
+        graphDiv.style.width = "100%";
+
+        cardBody.appendChild(title);
+        cardBody.appendChild(graphDiv);
+        cardDiv.appendChild(cardBody);
+        colDiv.appendChild(cardDiv);
+        graphsContainer.appendChild(colDiv);
+
+        const xValues = data.X_test[data.feature_names[0]];
+        const yValues = data.X_test[data.feature_names[1]];
+        const predictions = data.predictions;
+
+        const scatterData = {
+            x: xValues,
+            y: yValues,
+            mode: 'markers',
+            marker: {
+                size: 10,
+                color: predictions.map(pred => data.classes.indexOf(pred)), // Map class labels to indices
+                colorscale: 'Viridis',
+                showscale: true,
+                colorbar: {
+                    title: "Classes",
+                    tickvals: data.classes.map((_, idx) => idx),
+                    ticktext: data.classes
+                }
+            },
+            text: predictions // Display predicted class on hover
+        };
+
+        const layout = {
+            title: "KNN Classification Visualization",
+            xaxis: { title: data.feature_names[0] },
+            yaxis: { title: data.feature_names[1] },
+        };
+
+        Plotly.newPlot(graphDiv.id, [scatterData], layout);
+    }
+
+
+//Fetch the granularity of the data from the backend
+    async function fetchClassification(dataframe) {
+    try {
+        const response = await fetch('http://localhost:5001/get-classification', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            console.error("Failed to fetch classification.", response.statusText);
+            return;
+        }
+
+        if (response.status === 201) { //didnt want classification
+            return;
+        } 
+        else { //classify and graph
+            const data = await response.json();
+            console.log(data);
+            kNNPlotHelper(data);
+        }
+    } catch (error) {
+        console.error("Error in fetchKNNClassification:", error);
+    }
+}
+
 //create the graphs by fetching pandas DF info and plotting on front end with plotly
     document.addEventListener("DOMContentLoaded", async () => {
         try {
             const response = await fetch("http://localhost:3000/get-pairs");
             if (!response.ok) {
+                console.error("Failed to fetch pairs:", response.statusText);
                 return;
             }
 
@@ -106,10 +204,6 @@
                 console.log("No pairs to display.");
                 return;
             }
-
-            const graphTitle = document.getElementById("graphs-title")
-            graphTitle.innerHTML = '';
-            graphTitle.innerText = "Graphs"
 
             const graphsContainer = document.getElementById("graphs-container");
             pairs.forEach(async (pair, index) => {
@@ -154,6 +248,20 @@
 
                     const pairData = await pairResponse.json();
 
+                    /*// Fetch data for the pair
+                    const pairResponse = await fetch("http://localhost:5001/get-pair-typea", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ pair })
+                    });
+
+                    if (!pairResponse.ok) {
+                        console.error(`Failed to fetch types for ${pair[0]} and ${pair[1]}:`, pairResponse.statusText);
+                        return;
+                    }
+
+                    const pairTypes = await pairResponse.json(); */
+
                     // Create Plotly graph with the fetched data
                     const trace1 = {
                         x: pairData.x,
@@ -186,4 +294,5 @@
 
 fetchGranularity();
 fetchFileName();
+fetchClassification();
 </script>

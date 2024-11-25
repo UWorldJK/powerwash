@@ -71,6 +71,10 @@ def get_eda():
 def getFile():
     global data
     global fileName
+    global granularity
+    global choice
+    global classify
+    
     file = request.files["file"]
     #checks
     fileName = file.filename
@@ -87,7 +91,6 @@ def getFile():
             file.stream.seek(0)
 
             # Read CSV
-            global data
             data = clean.Cleaner(io.StringIO(file_content))
             with open("temp_data/data.pkl", "wb") as f: #write to pkl file
                 pickle.dump(data, f)
@@ -174,12 +177,15 @@ def submit_choices():
                 pickle.dump(data, f)
     with open("temp_data/fileName.pkl", "wb") as f: #write to pkl file
                 pickle.dump(fileName, f)
+    with open("temp_data/granularity.pkl", "wb") as f: #write to pkl file
+                pickle.dump(granularity, f)
+    with open("temp_data/classification.pkl", "wb") as f: #write to pkl file
+                pickle.dump(classify, f)
                 
     print("Received chip states:", choices)
+    
     if(choices["graphing"] == True):
         return jsonify({'message': 'Choices received, redirect to graph selection'}), 201
-    elif(choices["classification"] == True):
-        return jsonify({'message': 'Choices received, redirect to classification selection'}), 202
     return jsonify({'message': 'Choices received successfully!'}), 200
 
 @app.route('/get-pair-data', methods=['POST'])
@@ -214,7 +220,9 @@ def get_filename():
 
 @app.route('/get-granularity', methods=['GET'])
 def get_granularity():
-    global granularity
+    with open("temp_data/granularity.pkl", "rb") as f: #read from pkl file
+        granularity = pickle.load(f)
+    print("GRANULARITY", granularity)
     if granularity is not None:
         return jsonify({'pKey': granularity}), 200
     else:
@@ -227,13 +235,23 @@ def delete_cleanData_folder():
         shutil.rmtree('cleaned_data/')  
     return jsonify({'removed':removedFile}), 200
 
-@app.route('/get-classify', methods=['GET'])
-def get_classify():
-    global classify
-    if classify is not None:
-        return jsonify({'classify':True}), 200
+@app.route('/get-classification', methods=['POST'])
+def knn_classify():
+    with open("temp_data/data.pkl", "rb") as f:
+        data = pickle.load(f)
+    with open("temp_data/classification.pkl", "rb") as f:
+        classify = pickle.load(f)
+    
+    if classify is not None:   
+        target_col = data.identify_target_column()
+        if(target_col == "No target col available"):
+            return jsonify({"cannot classify":False}), 400
+        
+        result = data.knn(target_col)
+        return jsonify(result), 200
     else:
-        return jsonify({'classify':False}), 201
+        return jsonify({"did not want classification":False}), 201
+
     
 # Endpoint to serve the file
 @app.route('/cleaned_data/<path:filename>', methods=['GET'])
