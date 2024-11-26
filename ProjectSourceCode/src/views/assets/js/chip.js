@@ -3,7 +3,7 @@ const chipStates = {};
 
 // Predefined list of chips
 const predefinedChips = [
-    "graphing","normalization", "granularity", "standardization", "missing value removal", "missing value imputation", "duplicate removal", "standardize time format", "standardize date format","scaling", "binning", "encoding", "data type conversion", "feature extraction", "noise reduction", "data augmentation", "anomaly detection", "dimensionality reduction", "text cleaning", "tokenization", "stemming", "lemmatization", "data smoothing", "aggregation", "data transformation", "categorical conversion", "time series decomposition", "data discretization", "feature selection"
+    "graphing","normalization", "granularity", "standardization", "missing value removal", "classification", "duplicate removal", "standardize time format", "standardize date format","scaling", "binning", "encoding", "data type conversion", "feature extraction", "noise reduction", "data augmentation", "anomaly detection", "dimensionality reduction", "text cleaning", "tokenization", "stemming", "lemmatization", "data smoothing", "aggregation", "data transformation", "categorical conversion", "time series decomposition", "data discretization", "feature selection"
 ];
 
 // Function to create a new chip
@@ -46,9 +46,6 @@ window.onload = loadPredefinedChips();
 // Function to submit chip states to the backend
 async function submitChipStates() {
     try {
-        if(!chipStates[0]){
-            console.log("hello");
-        }
         const response = await fetch('http://localhost:5001/submit-choices', {
             method: 'POST',
             headers: {
@@ -62,14 +59,16 @@ async function submitChipStates() {
         }
 
         if(response.status == 201){
+            console.log("hello")
             window.location.href="http://localhost:3000/graphSelection";
+        }
+        else{
+            window.location.href="http://localhost:3000/result";
         }
 
         const result = await response.json();
         console.log("Backend response:", result);
-        // window.location.href="http://localhost:3000/result";
     } catch (error) {
         console.error("Error submitting choices:", error);
     }
 }
-
