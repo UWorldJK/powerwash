@@ -186,7 +186,7 @@ app.get("/get-pairs", (req, res) => {
 app.get('/home', (req, res) => {
   res.render('pages/home');
 });
-//================
+
 app.get('/forgot', (req, res) =>{
   res.render('pages/forgot');
 });
@@ -198,43 +198,53 @@ const transporter = nodemailer.createTransport({
       pass: process.env.EMAIL_PASS,
   },
   tls: {
-      rejectUnauthorized: false,  // For SSL certificate validation
+      rejectUnauthorized: false, 
   },
 });
 
-// POST route to handle forgot password form submission
+
 app.post('/forgot', async (req, res) => {
   const { email } = req.body;
 
   try {
-      const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+      const sanitizedEmail = email.trim().toLowerCase();
+      console.log('Sanitized email:', sanitizedEmail);
 
+      const result = await db.query('SELECT * FROM users WHERE LOWER(email) = $1', [sanitizedEmail]);
       console.log('Query result:', result);
 
       if (!result || result.length === 0) {
+          console.log('No user found with this email:', sanitizedEmail);
           return res.status(400).send('No account associated with this email');
       }
-
-      const user = result[0];  // Access the first element in rows
 
       const resetToken = crypto.randomBytes(32).toString('hex');
       const resetTokenExpires = new Date(Date.now() + 15 * 60 * 1000);
 
+      console.log('Updating user:', {
+          email: sanitizedEmail,
+          resetToken,
+          resetTokenExpires
+      });
+
       const updateResult = await db.query(
-          'UPDATE users SET reset_token = $1, reset_token_expires = $2 WHERE email = $3',
-          [resetToken, resetTokenExpires, email]
+        'UPDATE users SET reset_token = $1, reset_token_expires = $2 WHERE email = $3',
+        [resetToken, resetTokenExpires, sanitizedEmail]
       );
-
-      console.log('Update result:', updateResult);
-
+      const result2 = await db.query('SELECT * FROM users WHERE LOWER(email) = $1', [sanitizedEmail]);
+      console.log('Query result22:', result2);
+    
+      //console.log('Update result :', updateResult);
+    
       if (updateResult.rowCount === 0) {
-          return res.status(400).send('Failed to update reset token');
+        console.error('Failed to update reset token for:', sanitizedEmail);
+        return res.status(400).send('Failed to update reset token');
       }
 
       const resetUrl = `http://localhost:3000/reset-password?token=${resetToken}`;
       await transporter.sendMail({
           from: '"Your App" <no-reply@yourapp.com>',
-          to: email,
+          to: sanitizedEmail,
           subject: 'Password Reset',
           html: `<p>Click <a href="${resetUrl}">here</a> to reset your password. This link expires in 15 minutes.</p>`
       });
@@ -246,7 +256,7 @@ app.post('/forgot', async (req, res) => {
   }
 });
 
-//=========
+
 app.get('/logout', (req, res) => {
   res.render('pages/logout');
 });
@@ -292,51 +302,57 @@ app.get('/reset-password', (req, res) => {
 
 
 app.post('/reset-password', async (req, res) => {
-  //const { email } = req.body;
   const { newPassword, confirmPassword } = req.body;
-  //const token = req.query.token;  // Token is passed as a query parameter
-  const { token } = req.body
-  //const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+  const token = req.query.token; 
+
+
+  if (!token) {
+    return res.status(400).send('Token is required');
+  }
+
   try {
-    // Query the database to find the user by reset_token
+
     const result = await db.query('SELECT * FROM users WHERE reset_token = $1', [token]);
 
-    // Log the result to check its structure
-    console.log('Query result:', result);
+    console.log('Query result33:', result);
+    console.log('Rows from result:', result.rows);
 
-    // If the result is empty or undefined, return an error
     if (!result || result.length === 0) {
       return res.status(400).send('Invalid or expired token');
     }
 
-    const user = result[0];  // Access the first element of the array
+    const user = result[0];  
 
-    // Check if the token has expired
+  
+    console.log('User from DB:', user);
+
+
     const now = new Date();
     if (new Date(user.reset_token_expires) < now) {
       return res.status(400).send('Token has expired');
     }
 
-    // Ensure the new passwords match
+
     if (newPassword !== confirmPassword) {
       return res.status(400).send('Passwords do not match');
     }
 
     // Hash the new password before saving it
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    // Update the user's password and clear the reset token
     await db.query(
-      'UPDATE users SET password = $1, reset_token = NULL, reset_token_expires = NULL WHERE id = $2',
-      [hashedPassword, user.id]
+      'UPDATE users SET password = $1, reset_token = NULL, reset_token_expires = NULL WHERE username = $2',
+      [hashedPassword, user.username]
     );
 
-    return res.status(200).send('Password reset successful!');
+    //return res.status(200).send('Password reset successful!');
+    return res.redirect('/login');
   } catch (error) {
+   
     console.error('Error occurred:', error.message);
     res.status(500).send('An error occurred');
   }
 });
+
 
 
 
