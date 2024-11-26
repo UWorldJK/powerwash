@@ -1,4 +1,5 @@
 //---------------------Dependencies----------------------------\\
+require('dotenv').config();
 
 const express = require('express'); //to build an application server or API
 const app = express();
@@ -14,6 +15,10 @@ const bcrypt = require('bcryptjs'); //  To hash passwords
 
 const multer = require('multer'); //reading files
 const upload = multer({ dest: 'uploads/' }); // Files will be stored in the 'uploads' directory
+
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+app.use(express.urlencoded({ extended: true }));
 
 
 //--------------------------------------------------------------\\
@@ -177,59 +182,67 @@ app.get("/get-pairs", (req, res) => {
 app.get('/home', (req, res) => {
   res.render('pages/home');
 });
-
+//================
 app.get('/forgot', (req, res) =>{
   res.render('pages/forgot');
 });
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+  },
+  tls: {
+      rejectUnauthorized: false,  // For SSL certificate validation
+  },
+});
+
+// POST route to handle forgot password form submission
 app.post('/forgot', async (req, res) => {
   const { email } = req.body;
 
   try {
-    // Find the user by email
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).send('User not found');
-    }
+      const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
 
-    // Generate a reset token
-    const token = crypto.randomBytes(20).toString('hex');
-    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+      console.log('Query result:', result);
 
-    // Set the token and expiration time in the database
-    user.resetPasswordToken = hashedToken;
-    user.resetPasswordExpires = Date.now() + 3600000; // Token valid for 1 hour
-    await user.save();
+      if (!result || result.length === 0) {
+          return res.status(400).send('No account associated with this email');
+      }
 
-    // Configure Nodemailer
-    const transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: {
-        user: process.env.EMAIL, // Your email
-        pass: process.env.EMAIL_PASSWORD, // Your email password
-      },
-    });
+      const user = result[0];  // Access the first element in rows
 
-    // Send the email
-    const resetLink = `http://localhost:3000/reset/${token}`;
-    const mailOptions = {
-      to: user.email,
-      from: process.env.EMAIL,
-      subject: 'Password Reset',
-      text: `You are receiving this email because you requested a password reset.\n\n
-        Please click the link below to reset your password:\n\n
-        ${resetLink}\n\n
-        If you did not request this, please ignore this email.\n`,
-    };
+      const resetToken = crypto.randomBytes(32).toString('hex');
+      const resetTokenExpires = new Date(Date.now() + 15 * 60 * 1000);
 
-    await transporter.sendMail(mailOptions);
-    res.status(200).send('Password reset email sent');
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error sending email');
+      const updateResult = await db.query(
+          'UPDATE users SET reset_token = $1, reset_token_expires = $2 WHERE email = $3',
+          [resetToken, resetTokenExpires, email]
+      );
+
+      console.log('Update result:', updateResult);
+
+      if (updateResult.rowCount === 0) {
+          return res.status(400).send('Failed to update reset token');
+      }
+
+      const resetUrl = `http://localhost:3000/reset-password?token=${resetToken}`;
+      await transporter.sendMail({
+          from: '"Your App" <no-reply@yourapp.com>',
+          to: email,
+          subject: 'Password Reset',
+          html: `<p>Click <a href="${resetUrl}">here</a> to reset your password. This link expires in 15 minutes.</p>`
+      });
+
+      return res.status(200).send('Password reset email sent');
+  } catch (error) {
+      console.error('Error occurred:', error.message);
+      res.status(500).send('An error occurred');
   }
 });
 
+//=========
 app.get('/logout', (req, res) => {
   res.render('pages/logout');
 });
@@ -267,6 +280,62 @@ app.get('/graphSelection', (req, res) => {
 app.get('/test', (req, res) => {
   res.render('pages/test');
 });
+
+app.get('/reset-password', (req, res) => {
+  res.render('pages/reset-password');
+});
+
+
+
+app.post('/reset-password', async (req, res) => {
+  //const { email } = req.body;
+  const { newPassword, confirmPassword } = req.body;
+  //const token = req.query.token;  // Token is passed as a query parameter
+  const { token } = req.body
+  //const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+  try {
+    // Query the database to find the user by reset_token
+    const result = await db.query('SELECT * FROM users WHERE reset_token = $1', [token]);
+
+    // Log the result to check its structure
+    console.log('Query result:', result);
+
+    // If the result is empty or undefined, return an error
+    if (!result || result.length === 0) {
+      return res.status(400).send('Invalid or expired token');
+    }
+
+    const user = result[0];  // Access the first element of the array
+
+    // Check if the token has expired
+    const now = new Date();
+    if (new Date(user.reset_token_expires) < now) {
+      return res.status(400).send('Token has expired');
+    }
+
+    // Ensure the new passwords match
+    if (newPassword !== confirmPassword) {
+      return res.status(400).send('Passwords do not match');
+    }
+
+    // Hash the new password before saving it
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update the user's password and clear the reset token
+    await db.query(
+      'UPDATE users SET password = $1, reset_token = NULL, reset_token_expires = NULL WHERE id = $2',
+      [hashedPassword, user.id]
+    );
+
+    return res.status(200).send('Password reset successful!');
+  } catch (error) {
+    console.error('Error occurred:', error.message);
+    res.status(500).send('An error occurred');
+  }
+});
+
+
+
 
 //--------------------------------------------------------------\\
 //----------------------Starting Server--------- ----------------\\
