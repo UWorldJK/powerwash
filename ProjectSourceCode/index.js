@@ -159,7 +159,7 @@ app.get('/register', (req, res) => {
 app.post('/register', async (req, res) => {
   try {
     // Destructure the required fields from the request body
-    const { email, username, password, firstname, lastname, country } = req.body;
+    const { email, username, password} = req.body;
 
     // Validate that all required fields are provided
     if (!email || !username || !password ) {
@@ -171,6 +171,7 @@ app.post('/register', async (req, res) => {
     const query = 'INSERT INTO users (email, username, password) VALUES ($1, $2, $3)';
     const values = [email, username, hash];
     await db.oneOrNone(query, values); 
+    console.log("loggin in")
 
     res.redirect('/home');
 
