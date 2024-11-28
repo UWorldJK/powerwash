@@ -61,6 +61,6 @@ Handlebars will allow the website to displays variable data and user info into a
 Google Charts brings a variety of tools to display data in various charts/plots on the site
 
 **Tech Stack**
-Node, HTML, JS, Python, GPT API, CSS, Express, Bootstrap, PostgressSQL, Flask
+Node, HTML, JS, Python, CSS, Express, Bootstrap, PostgressSQL, Flask
 
 
