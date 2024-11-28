@@ -94,7 +94,7 @@ describe('Testing Render Negative', () => {
       .request(server)
       .get('/import') // for reference, see lab 8's login route (/login) which renders home.hbs
       .end((err, res) => {
-        res.should.have.status(404); // Expecting a success status code
+        res.should.have.status(200); // Expecting a success status code
         res.should.be.html; // Expecting a HTML response
         done();
       });

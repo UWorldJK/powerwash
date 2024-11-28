@@ -67,13 +67,31 @@ app.use(
       extended: true,
     })
   );
+
+  app.use('/assets', express.static(path.join(__dirname, 'src/views/assets')));
+  app.use('/images', express.static(path.join(__dirname, 'src/views/images')));
+
+
+
+  // Authentication Middleware
+const auth = (req, res, next) => {
+  const publicPaths = ['/login', '/register']; // Paths that don't require authentication
+  if (!req.session.user && !publicPaths.includes(req.path)) {
+    return res.redirect('/login');
+  }
+  next();
+};
+
+    
+// Authentication Required
+app.use(auth);
+
 //--------------------------------------------------------------\\
 
 
 
 
 //------------------------App Settings---------------------------\\
-app.use('/images', express.static(__dirname + 'src/views/images')); // change the path here
 
 // Register `hbs` as our view engine using its bound `engine()` function.
 app.engine('hbs', hbs.engine);
@@ -96,8 +114,6 @@ app.use(
   })
 );
 
-app.use('/assets', express.static(path.join(__dirname, 'src/views/assets')));
-app.use('/images', express.static(path.join(__dirname, 'src/views/images')));
 
 //--------------------------------------------------------------\\
 
@@ -259,6 +275,7 @@ app.post('/forgot', async (req, res) => {
 
 app.get('/logout', (req, res) => {
   res.render('pages/logout');
+  req.session.destroy();
 });
 
 app.get('/setup', (req, res) => {
