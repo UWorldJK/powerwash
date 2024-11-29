@@ -1,0 +1,281 @@
+<head>
+  <style>
+    .chips-container {
+        display: flex;
+        align-items: center; /* Center items vertically */
+        justify-content: flex-start; /* Align items horizontally */
+        gap: 0px; /* Add spacing between title and pile-items */
+        margin-top: 10px; /* Adjust margin for spacing */
+        textAlign: left;
+    }
+
+    #pile-items {
+        display: flex;
+        gap: 10px; /* Add spacing between items */
+        flex-wrap: wrap; /* Allow wrapping if there are too many items */
+    }
+
+    .chip {
+      background-color: #007BFF;
+      color: black;
+      padding: 8px 15px; /* Padding for consistent size */
+      border-radius: 20px; /* Round chip edges */
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15); /* Optional shadow for depth */
+      font-size: 14px; /* Adjust font size */
+      text-align: center; /* Center the text inside each chip */
+      display: inline-block; /* Ensure chips behave like blocks */
+    }
+
+    .columns {
+      display: flex;
+      justify-content: center;
+      gap: 10px; /* Space between X and Y-axis containers */
+      margin-top: 20px;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column; /* Stack label and dropzone vertically */
+      align-items: center;    /* Center align label and dropzone */
+      gap: 0px;              /* Space between label and dropzone */
+    }
+
+    .dropzone {
+      border: 1px dashed #ccc;
+      width: 200px;           /* Fixed width for dropzone */
+      height: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: center;    /* Center content within dropzone */
+    }
+
+    .item {
+      background-color: #007BFF;
+      color: white;
+      padding: 5px;
+      margin: 5px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+    <h3 style="text-align:center; padding-top:25px;color:black">Variables</h3>
+  <div class="chips-container">
+    <br>
+    <div id="pile-items"></div> <!-- Pile items will be dynamically populated here -->
+  </div>
+
+  <div id="rows">
+    <div class="columns" data-row="1">
+      <!-- X-Axis Column -->
+      <div class="column">
+        <h3 style="color: black;">X-Axis</h3>
+        <div class="dropzone" data-column="column1"></div>
+      </div>
+
+    
+      <div class="column">
+        <h3 style="color: black; padding-bottom: 0px">Y-Axis</h3>
+        <div class="dropzone" data-column="column2"></div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="columns-container" style="text-align:center">
+    <button class="btn btn-primary text-center" id="add-row" disabled>Add Graph</button>
+    <button class="btn btn-primary text-center"  onclick="postPairs()" id="submit">Submit</button>
+  </div>
+
+<script>
+
+
+//CODE FOR DYNAMICALLY ADDING VARS
+    // list of Vars names from columns
+    let columnVars = []; 
+    async function fetchAndDisplayVars() {
+        try {
+            const response = await fetch('http://localhost:5001/get-vars', {
+            method: 'GET'
+            });
+
+            if (!response.ok) {
+                console.error("Failed to fetch data:", response.statusText);
+                return;
+            }
+
+            let data = await response.json(); // Get the raw response text
+            console.log("Raw Response:", data); // Log raw response for debugging
+
+            try {
+                data = JSON.parse(data); // Parse manually to catch any issues
+                if (Array.isArray(data) && data.length > 0) {
+                    columnVars = data; // Store fetched data
+                    populatePile(columnVars); // Populate the pile with fetched data
+                } 
+                else {
+                    console.error("No data to display.");
+                }
+            } 
+            catch (error) {
+                console.error("Error parsing response:", error);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
+    // Populate the pile with draggable items
+    function populatePile(items) {
+        const pileContainer = document.getElementById("pile-items");
+        pileContainer.innerHTML = ""; // Clear any existing items
+
+        items.forEach((item) => {
+            const pileItem = document.createElement("div");
+            pileItem.className = "chip"; // Assign chip class
+            pileItem.draggable = true;
+            pileItem.textContent = item; // Set chip text
+            pileContainer.appendChild(pileItem);
+        });
+    }
+
+
+    window.onload = fetchAndDisplayVars();
+
+    let draggedItem = null;
+    const rows = { 1: { column1: null, column2: null } };
+    const uniquePairs = new Set();
+
+    // Drag and drop logic
+    document.addEventListener("dragstart", (event) => {
+      if (event.target.classList.contains("chip")) {
+        draggedItem = event.target;
+      }
+    });
+
+    document.addEventListener("dragover", (event) => {
+      event.preventDefault();
+    });
+
+    document.addEventListener("drop", (event) => {
+      const dropzone = event.target.closest(".dropzone");
+      if (dropzone && draggedItem) {
+        const row = dropzone.closest(".columns").dataset.row;
+        const column = dropzone.dataset.column;
+        const itemText = draggedItem.textContent;
+
+        // Prevent duplicate items in the same row
+        if (Object.values(rows[row]).includes(itemText)) {
+          alert("This item is already in this row!");
+          return;
+        }
+
+        // Place the item
+        dropzone.innerHTML = "";
+        dropzone.appendChild(draggedItem.cloneNode(true));
+        rows[row][column] = itemText;
+
+        // Enable adding new rows only if all current rows are filled
+        if (Object.values(rows[row]).every(value => value)) {
+          const pair = [rows[row].column1, rows[row].column2].sort().join("-");
+          if (uniquePairs.has(pair)) {
+            alert("This pair already exists!");
+            rows[row][column] = null;
+            dropzone.innerHTML = "";
+          } else {
+            uniquePairs.add(pair);
+            document.getElementById("add-row").disabled = false;
+          }
+        }
+      }
+    });
+
+    // Remove items from rows when clicked
+    document.addEventListener("click", (event) => {
+      if (event.target.classList.contains("item")) {
+        const parentDropzone = event.target.parentElement;
+        if (parentDropzone.classList.contains("dropzone")) {
+          const row = parentDropzone.closest(".columns").dataset.row;
+          const column = parentDropzone.dataset.column;
+
+          // Remove the pair from uniquePairs if the row is full
+          if (Object.values(rows[row]).every(value => value)) {
+            const pair = [rows[row].column1, rows[row].column2].sort().join("-");
+            uniquePairs.delete(pair);
+          }
+
+          parentDropzone.innerHTML = "";
+          rows[row][column] = null;
+
+          // Disable add-row button if any row is incomplete
+          document.getElementById("add-row").disabled = true;
+        }
+      }
+    });
+
+    // Add new row
+    document.getElementById("add-row").addEventListener("click", () => {
+      const rowsContainer = document.getElementById("rows");
+      const rowCount = Object.keys(rows).length + 1;
+      rows[rowCount] = { column1: null, column2: null };
+
+      const newRow = document.createElement("div");
+      newRow.classList.add("columns");
+      newRow.dataset.row = rowCount;
+      newRow.innerHTML = `
+        <div class="dropzone" style="justify-content:center;" data-column="column1"></div>
+        <div class="dropzone" style="justify-content:center;" data-column="column2"></div>
+      `;
+      rowsContainer.appendChild(newRow);
+
+      document.getElementById("add-row").disabled = true; // Disable until the new row is filled
+    });
+
+  function pairsHelper(){
+    const pairs = [];
+      for (const [row, columns] of Object.entries(rows)) {
+        if (columns.column1 && columns.column2) {
+          pairs.push([columns.column1, columns.column2]);
+        }
+      }
+      console.log("Pairs:", pairs);
+      return pairs;
+      
+  }
+
+ function postPairs() {
+    const pairs = pairsHelper(); // Get selected pairs
+    if (pairs.length === 0) {
+        alert("Please select at least one pair to visualize.");
+        return;
+    }
+
+    // POST the data to the server
+    fetch("http://localhost:3000/post-pairs", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pairs }),
+    })
+    .then(response => {
+        if (response.ok) {
+            // Redirect to the result page after successful post
+            window.location.href = "http://localhost:3000/result";
+        } else {
+            console.error("Failed to post pairs:", response.statusText);
+        }
+    })
+    .catch(error => {
+        console.error("Error posting pairs:", error);
+    });
+   window.location.href='/graphSelection';
+
+}
+
+
+  </script>
+</body>

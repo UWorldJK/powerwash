@@ -3,25 +3,17 @@ import itertools as it
 import numpy as np
 import matplotlib
 from matplotlib import pyplot  as plt
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
 
 class Cleaner:
     def __init__(self, data):
         self.df = pd.read_csv(data)
-        print('called')
         
-        # #clean must return a Pandas DF
-        # self.dfClean = self.clean(self.df)
-        
-        # rows, cols = self.dfClean.shape
-        
-        # #imagining a screen of feedback after cleaning on front end, between insert and choices pages
-        # print("Your clean data has",rows,"entries, and", cols, "parameters")
-        # print("First few entries of your clean data...") #want this to be a dropdown on front end
-        # print(self.dfClean.head())
-        # return self.dfClean
-    
-    #to remove duplicate entries
-    #sounds good, because the data set is global we can jus do it like this
+    def get_df(self):
+        return self.df
 
     #return the head of the data (5 lines)
     def get_head(self):
@@ -70,6 +62,12 @@ class Cleaner:
     def get_structure(self):
         return self.df.shape
     
+    def get_column_data(self, name):
+        return self.df[name]
+    
+    def get_columns(self):
+        return self.df.columns
+    
     def get_sample(self, n):
         return self.df.sample(n, frac=1, replace=False)
     
@@ -90,18 +88,80 @@ class Cleaner:
                     return subset_as_list
 
         return primary_keys if primary_keys else None
+    
+    # For KNN
+    def identify_target_column(self):
+        # Identify potential categorical columns
+        df = self.df
+        categorical_cols = [col for col in df.columns 
+                            if df[col].nunique() <= 10 and df[col].dtype == 'object']
+        
+        # check to make sure not pKey
+        potential_targets = [col for col in categorical_cols if df[col].nunique() < len(df)]
+        
+        # Return the first potential target column or raise a warning
+        if potential_targets:
+            return potential_targets[0]
+        else:
+            return "No target col available"
+        
+
+
+    def knn(self, target_col):
+        n_neighbors = 9
+        df = self.df.copy()  # Work on a copy to avoid altering the original data
+
+        # Initialize label encoders for all columns
+        label_encoders = {}
+
+        # Iterate over all columns and encode if needed
+        for col in df.columns:
+            if df[col].dtype == 'object':  # Check for non-numeric columns
+                le = LabelEncoder()
+                df[col] = le.fit_transform(df[col].astype(str))  # Encode the column
+                label_encoders[col] = le  # Store the encoder for future decoding
+
+        # Separate features (X) and target (y)
+        X = df.drop(columns=[target_col])
+        y = df[target_col]
+
+        # Split the data into train and test sets
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, shuffle=True)
+
+        # Initialize and train the KNN classifier
+        knn = KNeighborsClassifier(n_neighbors=n_neighbors)
+        knn.fit(X_train, y_train)
+
+        # Make predictions and calculate probabilities
+        predictions = knn.predict(X_test)
+        probabilities = knn.predict_proba(X_test)
+
+        # Decode the target column back to original labels
+        predictions_decoded = label_encoders[target_col].inverse_transform(predictions).tolist()
+        
+        # Prepare results with metadata
+        return {
+            "X_test": X_test.reset_index(drop=True).to_dict(orient='list'),  # Ensure indices align
+            "predictions": predictions_decoded,
+            "probabilities": probabilities.tolist(),
+            "classes": label_encoders[target_col].inverse_transform(knn.classes_).tolist(),
+            "feature_names": X.columns.tolist()
+        }
+
+
+
         
     
-    def clean(self, duplicates=False, naEntries=False, convertTime=False, convertDate=False, normalize=False):
-        if(duplicates):
+    def clean(self, features):
+        if(features["duplicate removal"] == True):
             self.remove_duplicates()
-        if(naEntries):
+        if(features["missing value removal"] == True):
             self.remove_na()
-        if(convertTime):
+        if(features["standardize time format"] == True):
             self.convert_time()
-        if(convertDate):
+        if(features["standardize date format"] == True):
             self.convert_date()
-        if(normalize):
+        if(features["normalization"] == True):
             self.normalize_data()
         return self.df
         

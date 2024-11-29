@@ -8,7 +8,6 @@
     margin: 40px auto;
     max-width: 800px;
     border-radius: 25px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
     transform: translate(0px, -50px);
 }
 
@@ -17,8 +16,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #444, #222);
-    color: #fff;
+    background: linear-gradient(135deg, #F6F5F5, #f1f1f1);
+    color: black;
     padding: 10px 20px;
     border-radius: 30px;
     cursor: pointer;
@@ -36,12 +35,12 @@
 .chip:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(135deg, #555, #333);
+    background: linear-gradient(135deg, #276678, #D3E0EA);
 }
 
 /* Highlight selected chip */
 .chip.selected {
-    background: linear-gradient(135deg, #4caf50, #2e7d32);
+    background: linear-gradient(135deg, #1687A7, #276678);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
     color: #fff;
 }

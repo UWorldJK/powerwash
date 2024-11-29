@@ -5,13 +5,9 @@
 **Overview:**  
 PowerWash is a streamlined tool designed to simplify the process of cleaning and analyzing datasets. By allowing users to upload a CSV through our intuitive front-end interface, PowerWash takes care of the heavy lifting in the background. Leveraging Python’s powerful Pandas library, the data is cleaned and prepped for further analysis.
 
-Once the dataset is wrangled, users can visualize their data through a variety of plot types, including:
-- Box plots
-- Histograms
-- Bar plots
-- Scatter plots
+Once the dataset is wrangled, users can visualize their data through a variety of plot types, where the use can select the variables in which they want to plot against eachother.
 
-These visualizations are created using Python’s Seaborn and Matplotlib libraries. Additionally, PowerWash offers insights into the dataset’s granularity (primary keys), helping users better understand the structure of their data. 
+These visualizations are created using JavaScript's plotly library. Additionally, PowerWash offers insights into the dataset’s granularity (primary keys), helping users better understand the structure of their data. Finally, PowerWash also offers users classification of their data, using the K-Nearest Neighbors machine learning algorithm.
 
 The tool also allows users to export and present their findings in the form of slideshows, making it easy to share and communicate insights with others.
 
@@ -65,6 +61,6 @@ Handlebars will allow the website to displays variable data and user info into a
 Google Charts brings a variety of tools to display data in various charts/plots on the site
 
 **Tech Stack**
-Node, HTML, JS, Python, GPT API, CSS, Express, Bootstrap, PostgressSQL, Flask
+Node, HTML, JS, Python, CSS, Express, Bootstrap, PostgressSQL, Flask
 
 

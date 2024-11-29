@@ -1,13 +1,110 @@
 <body>
+    {{!-- Table for data --}}
     <header class="section text-center text-black">
         <div class="container text-center">
-            <h1 class="display-3">Looking clean...</h1>
-            <p class="lead">What would you like to do?</p>
-        </div>
-    </header>
+            <h1 class="display-3" style="color: black;">Looking clean...</h1>
+            
+            <div class="container" 
+                style="width:80%; 
+                        height: 300px; 
+                        border-radius: 25px; 
+                        overflow-y: auto; 
+                        padding: 10px;
+                        background: #f1f1f1;" 
+                id="data-display">
+                <table id="data-table" style="width:100%; color: #fff; border-collapse: collapse;"></table>
+            </div>
 
-    <!-- Container for chips checklist -->
-    <div id="chipGrid" class="chips-container">
+            <br>
+
+            <h3 style="color: black; padding: 15px;">What would you like to do with your data?</h3>
+        </div>
+
+    <div id="chipGrid" class="chips-container" style="background-color: #f1f1f1;">
         <!-- Chips will be dynamically added here -->
     </div>
+
+    {{!-- Submit all chip states to the backend --}}
+    <button class="btn btn-primary text-center" onclick="submitChipStates()">Power Wash!</button>
 </body>
+
+
+<script>
+    /* Calls to back end to fetch the head of the pandas DF, and then puts into an html table for easy viewing*/
+    async function fetchAndDisplayData() {
+    try {
+        const response = await fetch('http://localhost:5001/get-data', {
+            method: 'GET'
+        });
+        if (!response.ok) {
+            console.error("Failed to fetch data:", response.statusText);
+            return;
+        }
+
+        const data = await response.json();
+        const table = document.getElementById('data-table');
+
+        if (Array.isArray(data) && data.length > 0) {
+            // Create table header
+            const headers = Object.keys(data[0]);
+            const headerRow = document.createElement('tr');
+            headers.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                th.style.borderBottom = '1px solid #fff'; // Optional styling
+                th.style.padding = '8px'; // Optional spacing
+                th.style.textAlign = 'left';
+                th.style.color = 'black';
+                headerRow.appendChild(th);
+            });
+            table.appendChild(headerRow);
+
+            // Create table rows
+            data.forEach(row => {
+                const rowElement = document.createElement('tr');
+                headers.forEach(header => {
+                    const td = document.createElement('td');
+                    td.textContent = row[header];
+                    td.style.color = 'black';
+                    td.style.padding = '8px'; // Optional spacing
+                    rowElement.appendChild(td);
+                });
+                table.appendChild(rowElement);
+            });
+        } else {
+            table.innerHTML = "<tr><td>No data to display.</td></tr>";
+        }
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}
+
+    /*On the back end, the clean data is stored in a folder "clean_data", that is created every time 
+    the submit chip states function is called. When changing what has been done to the data, 
+    the folder is deleted, only leaving the original clean data*/
+    async function deleteOldData(){
+        try {
+        const response = await fetch('http://localhost:5001/delete-clean-folder', {
+            method: 'POST'
+        });
+
+        if (response.ok) {
+            console.log(1);
+            const result = await response.json();
+
+        } else {
+            console.log(2);
+            const errorResponse = await response.json();
+            console.error("Error deleteing old files:", errorResponse.error);
+
+        }
+    } catch (error) {
+        console.log(3);
+        console.error("Error:", error);
+        alert("An error occurred while deletes the old files.");
+    }
+    }
+
+fetchAndDisplayData();
+deleteOldData();
+</script>
