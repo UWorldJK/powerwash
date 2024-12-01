@@ -171,7 +171,7 @@ app.post('/register', async (req, res) => {
     const values = [email, username, hash];
     await db.oneOrNone(query, values); 
 
-    res.redirect('/login');
+    res.redirect('pages/login');
 
   } catch (err) {
     // Handle any errors during the registration process
