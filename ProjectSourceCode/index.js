@@ -134,7 +134,6 @@ app.post('/login', async (req, res) => {
   try {
     console.log("TRYING TO FIX")	  
     console.log("LOGGING IN")
-    console.log(req.body.email)
     const user = await db.one('SELECT users.password FROM users WHERE users.username = $1', [req.body.username]);
     const match = await bcrypt.compare(req.body.password, user.password);
     if (match) 
@@ -173,7 +172,7 @@ app.post('/register', async (req, res) => {
     await db.oneOrNone(query, values); 
     console.log("loggin in")
 
-    res.redirect('/home');
+    res.redirect('/login');
 
   } catch (err) {
     // Handle any errors during the registration process
