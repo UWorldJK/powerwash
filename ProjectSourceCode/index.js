@@ -172,7 +172,7 @@ app.post('/register', async (req, res) => {
     await db.oneOrNone(query, values); 
     console.log("loggin in")
 
-    res.redirect('/login');
+    res.redirect('pages/login');
 
   } catch (err) {
     // Handle any errors during the registration process
