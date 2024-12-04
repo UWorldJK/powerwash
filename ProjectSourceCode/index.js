@@ -34,7 +34,7 @@ const hbs = handlebars.create({
 
 // database configuration
 const dbConfig = {
-    host: 'db', //database server
+    host: process.env.POSTGRES_HOST, //database server
     port: 5432, //database port
     database: process.env.POSTGRES_DB, //database name
     user: process.env.POSTGRES_USER, //user account to connect with
@@ -170,6 +170,7 @@ app.post('/register', async (req, res) => {
     const query = 'INSERT INTO users (email, username, password) VALUES ($1, $2, $3)';
     const values = [email, username, hash];
     await db.oneOrNone(query, values); 
+    console.log("loggin in")
 
     res.redirect('pages/login');
 
