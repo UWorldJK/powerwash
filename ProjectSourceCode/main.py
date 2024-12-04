@@ -9,6 +9,10 @@ import json
 import pickle
 import os
 import shutil
+import dotenv
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 
@@ -270,5 +274,5 @@ def download_file(filename):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=False)
+    app.run(host=os.getenv("HOST"), port=int(os.getenv("PORT"),5001), debug=False)
 
