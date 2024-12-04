@@ -27,7 +27,7 @@
 // Fetch the file name from the backend
     async function fetchFileName() {
     try {
-        const response = await fetch('http://localhost:5001/get-filename');
+        const response = await fetch('https://powerwash-flask.onrender.com/get-filename');
         if (!response.ok) {
             console.error("Failed to fetch file name.", response.statusText);
             return;
@@ -39,7 +39,7 @@
         downloadContainer.innerHTML = '';
 
         const downloadLink = document.createElement("a");
-        downloadLink.href = `http://localhost:5001/cleaned_data/${fileName["filename"]}`;
+        downloadLink.href = `https://powerwash-flask.onrender.com/cleaned_data/${fileName["filename"]}`;
         downloadLink.download = fileName["filename"];
         downloadLink.className = "download-icon";
         downloadLink.title = "Download File";
@@ -63,7 +63,7 @@
 //Fetch the granularity of the data from the backend
     async function fetchGranularity(){
         try {
-            const response = await fetch('http://localhost:5001/get-granularity');
+            const response = await fetch('https://powerwash-flask.onrender.com/get-granularity');
             if (!response.ok) {
                 console.error("Failed to fetch file name.", response.statusText);
                 return;
@@ -165,7 +165,7 @@
 //Fetch the granularity of the data from the backend
     async function fetchClassification(dataframe) {
     try {
-        const response = await fetch('http://localhost:5001/get-classification', {
+        const response = await fetch('https://powerwash-flask.onrender.com/get-classification', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -193,7 +193,7 @@
 //create the graphs by fetching pandas DF info and plotting on front end with plotly
     document.addEventListener("DOMContentLoaded", async () => {
         try {
-            const response = await fetch("http://localhost:3000/get-pairs");
+            const response = await fetch("https://powerwash.onrender.com/get-pairs");
             if (!response.ok) {
                 console.error("Failed to fetch pairs:", response.statusText);
                 return;
@@ -235,7 +235,7 @@
 
                 try {
                     // Fetch data for the pair
-                    const pairResponse = await fetch("http://localhost:5001/get-pair-data", {
+                    const pairResponse = await fetch("https://powerwash-flask.onrender.com/get-pair-data", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ pair })
