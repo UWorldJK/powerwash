@@ -98,7 +98,7 @@
     let columnVars = []; 
     async function fetchAndDisplayVars() {
         try {
-            const response = await fetch('http://localhost:5001/get-vars', {
+            const response = await fetch('https://powerwash-flask.onrender.com/get-vars', {
             method: 'GET'
             });
 
@@ -254,7 +254,7 @@
     }
 
     // POST the data to the server
-    fetch("http://localhost:3000/post-pairs", {
+    fetch("https://powerwash.onrender.com/post-pairs", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -264,7 +264,7 @@
     .then(response => {
         if (response.ok) {
             // Redirect to the result page after successful post
-            window.location.href = "http://localhost:3000/result";
+            window.location.href = "https://powerwash.onrender.com/result";
         } else {
             console.error("Failed to post pairs:", response.statusText);
         }

@@ -257,7 +257,7 @@ app.post('/forgot', async (req, res) => {
         return res.status(400).send('Failed to update reset token');
       }
 
-      const resetUrl = `http://localhost:3000/reset-password?token=${resetToken}`;
+      const resetUrl = `https://powerwash.onrender.com/reset-password?token=${resetToken}`;
       await transporter.sendMail({
           from: '"Your App" <no-reply@yourapp.com>',
           to: sanitizedEmail,

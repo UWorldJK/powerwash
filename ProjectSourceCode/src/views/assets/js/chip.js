@@ -46,7 +46,7 @@ window.onload = loadPredefinedChips();
 // Function to submit chip states to the backend
 async function submitChipStates() {
     try {
-        const response = await fetch('http://localhost:5001/submit-choices', {
+        const response = await fetch('https://powerwash-flask.onrender.com/submit-choices', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -60,10 +60,10 @@ async function submitChipStates() {
 
         if(response.status == 201){
             console.log("hello")
-            window.location.href="http://localhost:3000/graphSelection";
+            window.location.href="https://powerwash.onrender.com/graphSelection";
         }
         else{
-            window.location.href="http://localhost:3000/result";
+            window.location.href="https://powerwash.onrender.com/result";
         }
 
         const result = await response.json();
