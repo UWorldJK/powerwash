@@ -63,4 +63,22 @@ Google Charts brings a variety of tools to display data in various charts/plots 
 **Tech Stack**
 Node, HTML, JS, Python, CSS, Express, Bootstrap, PostgressSQL, Flask
 
+## **Running the Application**
+
+**Prerequistes:**
+The only requirement for running our application locally is to have an account with and have downloaded Docker.
+
+**Running the application locally**
+To run the application locally, navigate into the "ProjectSourceCode" folder in your terminal and run the following command:
+```
+docker compose up --build
+```
+Upon composition, tests will automatically run. Once you see that the application is listening on port 3000, navigate to localhost:3000, and enjoy!
+
+**Hosted Application**
+If you would prefer to not run the application, navigate to:
+[https://powerwash.onrender.com](url)
+
+
+
 
