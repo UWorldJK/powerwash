@@ -54,7 +54,7 @@ This dual-setup allows us to leverage the strengths of both frameworks, creating
 
 **Front End Design**
 
-Our front-end architecture will use a combination of HTML, Handlebars, and Google Charts to provide user-interface, a way to display variable data in a templated format, and connect our front-end to our back-end.
+Our front-end architecture will use a combination of HTML, Handlebars, and Plotly to provide user-interface, a way to display variable data in a templated format, and connect our front-end to our back-end.
 
 HTML will be used to layout the contents of the webpage
 Handlebars will allow the website to displays variable data and user info into an empty template
