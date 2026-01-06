@@ -75,10 +75,6 @@ docker compose up --build
 ```
 Upon composition, tests will automatically run. Once you see that the application is listening on port 3000, navigate to localhost:3000, and enjoy!
 
-**Hosted Application**
-If you would prefer to not run the application, navigate to:
-[https://powerwash.onrender.com](url)
-
 
 
 
